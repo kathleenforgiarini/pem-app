@@ -1,16 +1,17 @@
-// src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/Login';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Protected from './Protected';
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        {/* Other routes here */}
+        <Route path="/" element={ <Login/> } />
+        <Route path="/dashboard" element={ <Protected Component={Dashboard}/> } />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 
