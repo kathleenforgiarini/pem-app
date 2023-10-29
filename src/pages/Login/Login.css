@@ -1,0 +1,98 @@
+#login {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
+
+.switch {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 3vw;
+  }
+
+  .switch button{
+    border: none;
+    width: 8vw;
+    font-size: 1.2vw;
+    padding: 1vw;
+    cursor: pointer;
+  }
+
+  .btnLogin {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
+
+  .btnSignup {
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
+
+  .switch button {
+    color: #a173b3;
+    outline: none;
+  }
+
+  .switch button:focus {
+    background-color: #a173b3;
+    color: white;
+  }
+  
+  .switch button.focus {
+    background-color: #a173b3;
+    color: white;
+  }
+
+.img {
+  background-color: #a173b3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem;
+}
+
+.img img {
+  width: 15vw;
+}
+
+.img p {
+  font-size: 3vw;
+  color: #303030;
+  text-align: center;
+}
+
+form {
+  background-color: #d9d9d9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+}
+
+input {
+  margin-bottom: 1vw;
+  padding: 1vw;
+  border-radius: 1vw;
+  border: 1px solid #606060;
+  font-size: 1vw;
+}
+
+.btnSubmit {
+    background-color: #a173b3;
+    border: none;
+    border-radius: 1rem;
+    width: 10vw;
+    font-size: 1.2vw;
+    color: white;
+    align-self: center;
+    padding: 1vw;
+    margin-top: 1vw;
+    cursor: pointer;
+}
