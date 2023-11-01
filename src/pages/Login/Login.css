@@ -5,45 +5,45 @@
 }
 
 .switch {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 3vw;
-  }
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 3vw;
+}
 
-  .switch button{
-    border: none;
-    width: 8vw;
-    font-size: 1.2vw;
-    padding: 1vw;
-    cursor: pointer;
-  }
+.switch button {
+  border: none;
+  width: 8vw;
+  font-size: 1.2vw;
+  padding: 1vw;
+  cursor: pointer;
+}
 
-  .btnLogin {
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-  }
+.btnLogin {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
 
-  .btnSignup {
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-  }
+.btnSignup {
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
 
-  .switch button {
-    color: #a173b3;
-    outline: none;
-  }
+.switch button {
+  color: #a173b3;
+  outline: none;
+}
 
-  .switch button:focus {
-    background-color: #a173b3;
-    color: white;
-  }
-  
-  .switch button.focus {
-    background-color: #a173b3;
-    color: white;
-  }
+.switch button:focus {
+  background-color: #a173b3;
+  color: white;
+}
 
-.img {
+.switch button.focus {
+  background-color: #a173b3;
+  color: white;
+}
+
+.imgWelcome {
   background-color: #a173b3;
   display: flex;
   flex-direction: column;
@@ -52,17 +52,17 @@
   padding: 5rem;
 }
 
-.img img {
+.imgWelcome img {
   width: 15vw;
 }
 
-.img p {
+.imgWelcome p {
   font-size: 3vw;
   color: #303030;
   text-align: center;
 }
 
-.form {
+.formLogin {
   background-color: #d9d9d9;
   display: flex;
   flex-direction: column;
@@ -70,13 +70,13 @@
   align-items: center;
 }
 
-.inputs {
+.inputsLogin {
   display: flex;
   flex-direction: column;
   width: 40vw;
 }
 
-input {
+.inputsLogin input {
   margin-bottom: 1vw;
   padding: 1vw;
   border-radius: 1vw;
@@ -85,16 +85,16 @@ input {
 }
 
 .btnSubmit {
-    background-color: #a173b3;
-    border: none;
-    border-radius: 1rem;
-    width: 10vw;
-    font-size: 1.2vw;
-    color: white;
-    align-self: center;
-    padding: 1vw;
-    margin-top: 1vw;
-    cursor: pointer;
+  background-color: #a173b3;
+  border: none;
+  border-radius: 1rem;
+  width: 10vw;
+  font-size: 1.2vw;
+  color: white;
+  align-self: center;
+  padding: 1vw;
+  margin-top: 1vw;
+  cursor: pointer;
 }
 
 .error {
@@ -105,60 +105,59 @@ input {
   color: green;
 }
 
-@media screen and (max-width:920px) {
+@media screen and (max-width: 920px) {
   #login {
     display: flex;
     flex-direction: column;
   }
 
-  .img{
+  .imgWelcome {
     height: 20vw;
   }
 
-  .form{
+  .formLogin {
     padding-top: 2vw;
     height: 100%;
   }
 
-  .switch button{
+  .switch button {
     width: 20vw;
     font-size: 3vw;
   }
 
-  .inputs {
+  .inputsLogin {
     width: 60vw;
   }
-  
-  input {
+
+  .inputsLogin input {
     padding: 2vw;
     font-size: 2vw;
   }
-  
+
   .btnSubmit {
-      width: 15vw;
-      font-size: 2.5vw;
+    width: 15vw;
+    font-size: 2.5vw;
   }
 }
 
-@media screen and (max-width:700px) {
-
-  .switch button{
+@media screen and (max-width: 700px) {
+  .switch button {
     width: 30vw;
     font-size: 4vw;
   }
 
-  .inputs {
+  .inputsLogin {
     width: 80vw;
   }
-  
-  input {
+
+  .inputsLogin input {
     padding: 3vw;
     font-size: 3vw;
   }
-  
+
   .btnSubmit {
-      margin-top: 4vw;
-      width: 20vw;
-      font-size: 3vw;
+    margin-top: 4vw;
+    width: 20vw;
+    font-size: 3vw;
   }
 }

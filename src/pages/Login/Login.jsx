@@ -121,11 +121,11 @@ const Login = () => {
 
   return (
     <section id="login">
-      <div className="img">
+      <div className="imgWelcome">
         <img src={logo} alt="logo" />
         <p>Welcome to your Personal Expenses Management</p>
       </div>
-      <div className="form">
+      <div className="formLogin">
         <div className="switch">
           <button
             ref={loginRef}
@@ -144,7 +144,7 @@ const Login = () => {
             Sign up
           </button>
         </div>
-        <div className="inputs">
+        <div className="inputsLogin">
           <p>
             {error !== "" ? (
               <span className="error">{error}</span>
