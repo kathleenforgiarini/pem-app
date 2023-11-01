@@ -104,3 +104,61 @@ input {
 .success {
   color: green;
 }
+
+@media screen and (max-width:920px) {
+  #login {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .img{
+    height: 20vw;
+  }
+
+  .form{
+    padding-top: 2vw;
+    height: 100%;
+  }
+
+  .switch button{
+    width: 20vw;
+    font-size: 3vw;
+  }
+
+  .inputs {
+    width: 60vw;
+  }
+  
+  input {
+    padding: 2vw;
+    font-size: 2vw;
+  }
+  
+  .btnSubmit {
+      width: 15vw;
+      font-size: 2.5vw;
+  }
+}
+
+@media screen and (max-width:700px) {
+
+  .switch button{
+    width: 30vw;
+    font-size: 4vw;
+  }
+
+  .inputs {
+    width: 80vw;
+  }
+  
+  input {
+    padding: 3vw;
+    font-size: 3vw;
+  }
+  
+  .btnSubmit {
+      margin-top: 4vw;
+      width: 20vw;
+      font-size: 3vw;
+  }
+}

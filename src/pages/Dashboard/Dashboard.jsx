@@ -1,18 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
 
-function Dashboard(){
-    const navigate = useNavigate();
-    function logoutSubmit(){
-        localStorage.setItem("login", "");
-        localStorage.setItem("loginStatus", "Logged out successfully!")
-        navigate("/");
-    }
-    return (
-        <div className="">
-            <h3>Dashboard Page</h3>
-            <p onClick={logoutSubmit}>Logout</p>
-        </div>
-    );
+function Dashboard() {
+  return (
+    <div className="">
+      <NavBar />
+      <h3>Dashboard Page</h3>
+    </div>
+  );
 }
 
 export default Dashboard;

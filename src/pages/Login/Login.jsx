@@ -19,11 +19,10 @@ const Login = () => {
     let loginStatus = localStorage.getItem("loginStatus");
     if (loginStatus) {
       setError(loginStatus);
-      setTimeout(function(){
+      setTimeout(function () {
         localStorage.clear();
         window.location.reload();
-      }, 3000)
-      
+      }, 5000);
     }
     setTimeout(function () {
       setMsg("");
@@ -80,23 +79,24 @@ const Login = () => {
         .then((response) => response.json())
         .then((response) => {
           if (
-            response[0].result === "Invalid email!" ||
-            response[0].result === "Invalid password!"
+            response.result === "Invalid email!" ||
+            response.result === "Invalid password!"
           ) {
-            setError(response[0].result);
+            setError(response.result);
           } else {
-            setMsg(response[0].result);
+            localStorage.setItem("userName", response.name);
+            localStorage.setItem("userPhoto", response.photo);
+            setMsg(response.result);
             setTimeout(function () {
               localStorage.setItem("login", true);
               navigate("/dashboard");
-            }, 5000);
+            }, 2000);
           }
         })
 
         .catch((err) => {
           console.error("Error in fetching data:", err);
           setError(err.toString());
-          console.log(err);
         });
     } else {
       setError("All fields are required!");
