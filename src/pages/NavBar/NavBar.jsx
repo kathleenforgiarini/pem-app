@@ -16,14 +16,18 @@ function NavBar() {
     setShowDropdown(!showDropdown);
   };
 
-  function logoutSubmit() {
-    localStorage.setItem("login", "");
-    localStorage.setItem("loginStatus", "Logged out successfully!");
-    navigate("/");
+  function dashSubmit() {
+    navigate("/dashboard");
   }
 
   function profileSubmit() {
     navigate("/profile");
+  }
+
+  function logoutSubmit() {
+    localStorage.setItem("login", "");
+    localStorage.setItem("loginStatus", "Logged out successfully!");
+    navigate("/");
   }
 
   useEffect(() => {
@@ -41,7 +45,7 @@ function NavBar() {
 
   return (
     <nav className="navbar-container">
-      <img className="navbar-logo" src={logo} alt="logo" />
+      <img className="navbar-logo" src={logo} alt="logo" onClick={dashSubmit} />
       <div className="user-info">
         <p>Hi, {storedName}</p>
         <div onClick={toggleDropdown} ref={dropdownRef}>
@@ -53,6 +57,7 @@ function NavBar() {
           />
           {showDropdown && (
             <div className="dropdown-content">
+              <p onClick={dashSubmit}>Dashboard</p>
               <p onClick={profileSubmit}>Profile</p>
               <p onClick={logoutSubmit}>Log out</p>
             </div>

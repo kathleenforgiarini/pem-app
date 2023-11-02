@@ -8,6 +8,7 @@
 
 .navbar-logo {
   width: 5rem;
+  cursor: pointer;
 }
 
 .user-info {
