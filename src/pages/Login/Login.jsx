@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/pem.png";
 import "./Login.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const Login = () => {
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
   const [msg, setMsg] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     let login = localStorage.getItem("login");
@@ -59,6 +61,10 @@ const Login = () => {
     }
   };
 
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   function loginSubmit() {
     if (email !== "" && pass !== "") {
       var url = "http://localhost/pem-api/login.php";
@@ -85,6 +91,7 @@ const Login = () => {
             setError(response.result);
           } else {
             localStorage.setItem("userName", response.name);
+            localStorage.setItem("userEmail", response.email);
             localStorage.setItem("userPhoto", response.photo);
             setMsg(response.result);
             setTimeout(function () {
@@ -184,15 +191,20 @@ const Login = () => {
               />
             </>
           )}
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={pass}
-            onChange={(e) => handleInputChange(e, "pass")}
-            placeholder="Password"
-            required
-          />
+          <div className="passwordLogin">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              id="password"
+              value={pass}
+              onChange={(e) => handleInputChange(e, "pass")}
+              placeholder="Password"
+              required
+            />
+            <span className="password-toggleLogin" onClick={handleShowPassword}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
           <button className="btnSubmit" type="submit" onClick={loginSubmit}>
             {isLogin ? "Login" : "Sign Up"}
           </button>

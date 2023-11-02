@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/pem.png";
+import userPhoto from "../../assets/userPhoto.png";
 import "./NavBar.css";
 
 function NavBar() {
@@ -43,15 +44,12 @@ function NavBar() {
       <img className="navbar-logo" src={logo} alt="logo" />
       <div className="user-info">
         <p>Hi, {storedName}</p>
-        <div
-          className="user-photo-container"
-          onClick={toggleDropdown}
-          ref={dropdownRef}
-        >
+        <div onClick={toggleDropdown} ref={dropdownRef}>
           <img
-            src={`data:image/png;base64,${storedPhoto}`}
+            src={
+              storedPhoto ? `data:image/png;base64,${storedPhoto}` : userPhoto
+            }
             alt="imgUser"
-            className="user-photo"
           />
           {showDropdown && (
             <div className="dropdown-content">

@@ -16,12 +16,28 @@
   width: 50vw;
 }
 
+.input-container {
+  position: relative;
+}
+
+.formProfile label {
+  font-size: 1rem;
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  background-color: white;
+  padding: 0 5px;
+  z-index: 1;
+}
+
 .formProfile input {
   margin: 1rem 0;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
+  box-sizing: border-box;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
   border: 1px solid gray;
   font-size: 1.2rem;
+  width: 100%;
 }
 
 .buttonsProfile {
@@ -59,4 +75,54 @@
 .btnDelete:hover {
   background-color: #a173b3;
   color: white;
+}
+
+.photoProfile {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.photoProfile input {
+  margin: 0;
+  align-self: flex-end;
+}
+
+.photoProfile img {
+  width: 10rem;
+  margin-right: 2rem;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-input-container input {
+  width: 50vw;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 52%;
+  transform: translateY(-50%);
+  right: 2rem;
+  color: black;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .photoProfile {
+    display: flex;
+    flex-direction: column;
+  }
+  .photoProfile input {
+    margin-top: 1rem;
+    align-self: flex-start;
+    max-width: 100%;
+  }
+  .buttonsProfile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

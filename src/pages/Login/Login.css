@@ -82,6 +82,7 @@
   border-radius: 1vw;
   border: 1px solid #606060;
   font-size: 1vw;
+  box-sizing: border-box;
 }
 
 .btnSubmit {
@@ -103,6 +104,24 @@
 
 .success {
   color: green;
+}
+
+.passwordLogin {
+  position: relative;
+}
+
+.passwordLogin input {
+  width: 100%;
+}
+
+.password-toggleLogin {
+  position: absolute;
+  top: 43%;
+  transform: translateY(-50%);
+  right: 2rem;
+  color: black;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 920px) {
