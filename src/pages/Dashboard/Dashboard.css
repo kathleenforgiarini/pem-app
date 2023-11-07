@@ -1,0 +1,82 @@
+#dashboard {
+  width: 100%;
+}
+
+#headerLists {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ececec;
+  padding: 2rem 8rem;
+}
+
+.newList {
+  background-color: #a173b3;
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  font-size: 1rem;
+  padding: 0.7rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.newList:hover {
+  background-color: #773790;
+}
+
+.plus {
+  margin-left: 1rem;
+}
+
+.searchLists {
+  display: flex;
+}
+
+.searchLists select,
+.searchLists input[type="text"] {
+  margin: 0;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+}
+
+.searchLists select {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  padding-right: 2rem;
+}
+
+.searchLists input[type="text"] {
+  padding-right: 9rem;
+}
+
+.searchLists button {
+  padding: 0rem 1rem;
+  background-color: #a173b3;
+  color: white;
+  border: none;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  cursor: pointer;
+}
+
+#lists {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  height: 80vh;
+}
+
+#lists h1 {
+  font-size: 2rem;
+  padding: 1rem 0;
+}
+
+.totalLists {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
