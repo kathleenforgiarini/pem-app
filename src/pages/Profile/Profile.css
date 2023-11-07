@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   margin-top: 2rem;
+  height: 80vh;
 }
 
 #profile h1 {
@@ -124,5 +125,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #profile {
+    margin-bottom: 10rem;
   }
 }

@@ -1,9 +1,11 @@
 .navbar-container {
   display: flex;
+  position: sticky;
   justify-content: space-between;
   align-items: center;
   background-color: #a173b3;
   padding: 1rem 8rem;
+  box-sizing: border-box;
 }
 
 .navbar-logo {

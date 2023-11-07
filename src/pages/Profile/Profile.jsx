@@ -3,6 +3,7 @@ import NavBar from "../NavBar/NavBar";
 import "./Profile.css";
 import userPhoto from "../../assets/userPhoto.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Footer from "../Footer/Footer";
 
 function Profile() {
   const [name, setName] = useState("");
@@ -151,6 +152,7 @@ function Profile() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }
