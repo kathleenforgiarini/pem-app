@@ -54,6 +54,12 @@
   border-bottom-right-radius: 1rem;
 }
 
+.totalLists {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
 #lists {
   display: flex;
   flex-direction: column;
@@ -65,12 +71,6 @@
 #lists h1 {
   font-size: 2rem;
   padding: 1rem 0;
-}
-
-.totalLists {
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: bold;
 }
 
 .modalOverlay {
@@ -165,7 +165,60 @@
   }
 }
 
+@media screen and (max-width: 920px) {
+  #headerLists {
+    padding: 2rem 3rem;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .newList {
+    font-size: 2.5vw;
+    padding: 1.5vw;
+  }
+
+  .searchLists select {
+    font-size: 2.5vw;
+    padding-right: 1vw;
+  }
+
+  .searchLists input[type="text"] {
+    font-size: 2.5vw;
+    padding-right: 1.4vw;
+  }
+
+  .totalLists {
+    font-size: 2.5vw;
+  }
+}
+
 @media screen and (max-width: 500px) {
+  #headerLists {
+    flex-direction: column;
+  }
+
+  .newList {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .searchLists {
+    margin-bottom: 2rem;
+  }
+
+  .searchLists select {
+    font-size: 0.8rem;
+  }
+
+  .searchLists input[type="text"] {
+    font-size: 0.8rem;
+  }
+
+  .totalLists {
+    font-size: 1rem;
+  }
+
   .modalContent {
     max-width: 100vw;
   }
