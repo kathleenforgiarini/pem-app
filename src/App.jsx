@@ -1,23 +1,25 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Profile from "./pages/Profile/Profile";
-import Protected from "./Protected";
 
 const App = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route
-          path="/dashboard"
-          element={<Protected Component={Dashboard} />}
-        />
-        <Route path="/profile" element={<Protected Component={Profile} />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  const [currentPage, setCurrentPage] = useState("login");
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case "login":
+        return <Login changePage={setCurrentPage} />;
+      case "dashboard":
+        return <Dashboard changePage={setCurrentPage} />;
+      case "profile":
+        return <Profile changePage={setCurrentPage} />;
+      default:
+        return <Login changePage={setCurrentPage} />;
+    }
+  };
+
+  return <div>{renderPage()}</div>;
 };
 
 export default App;

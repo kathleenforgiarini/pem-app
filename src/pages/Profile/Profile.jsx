@@ -5,7 +5,7 @@ import userPhoto from "../../assets/userPhoto.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Footer from "../Footer/Footer";
 
-function Profile() {
+const Profile = ({ changePage }) => {
   const [name, setName] = useState("");
   const [photo, setPhoto] = useState("");
   const [email, setEmail] = useState("");
@@ -83,7 +83,7 @@ function Profile() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar changePage={changePage} />
       <section id="profile">
         <h1>My Profile</h1>
         <div className="formProfile">
@@ -155,6 +155,6 @@ function Profile() {
       <Footer />
     </div>
   );
-}
+};
 
 export default Profile;

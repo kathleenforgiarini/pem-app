@@ -1,6 +1,7 @@
 .navbar-container {
   display: flex;
   position: sticky;
+  top: 0;
   justify-content: space-between;
   align-items: center;
   background-color: #a173b3;
@@ -59,7 +60,7 @@
   border-radius: 1rem;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 920px) {
   .navbar-container {
     padding: 1rem 3rem;
   }

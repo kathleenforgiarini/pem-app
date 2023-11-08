@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import logo from "../../assets/pem.png";
 import userPhoto from "../../assets/userPhoto.png";
 import "./NavBar.css";
 
-function NavBar() {
-  const navigate = useNavigate();
+const NavBar = ({ changePage }) => {
   const storedName = localStorage.getItem("userName");
   const storedPhoto = localStorage.getItem("userPhoto");
 
@@ -17,17 +15,17 @@ function NavBar() {
   };
 
   function dashSubmit() {
-    navigate("/dashboard");
+    changePage("dashboard");
   }
 
   function profileSubmit() {
-    navigate("/profile");
+    changePage("profile");
   }
 
   function logoutSubmit() {
     localStorage.setItem("login", "");
     localStorage.setItem("loginStatus", "Logged out successfully!");
-    navigate("/");
+    changePage("login");
   }
 
   useEffect(() => {
@@ -45,7 +43,12 @@ function NavBar() {
 
   return (
     <nav className="navbar-container">
-      <img className="navbar-logo" src={logo} alt="logo" onClick={dashSubmit} />
+      <img
+        className="navbar-logo"
+        src={logo}
+        alt="logo"
+        onClick={() => dashSubmit()}
+      />
       <div className="user-info">
         <p>Hi, {storedName}</p>
         <div onClick={toggleDropdown} ref={dropdownRef}>
@@ -57,15 +60,15 @@ function NavBar() {
           />
           {showDropdown && (
             <div className="dropdown-content">
-              <p onClick={dashSubmit}>Dashboard</p>
-              <p onClick={profileSubmit}>Profile</p>
-              <p onClick={logoutSubmit}>Log out</p>
+              <p onClick={() => dashSubmit()}>Dashboard</p>
+              <p onClick={() => profileSubmit()}>Profile</p>
+              <p onClick={() => logoutSubmit()}>Log out</p>
             </div>
           )}
         </div>
       </div>
     </nav>
   );
-}
+};
 
 export default NavBar;

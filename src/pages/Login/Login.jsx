@@ -1,35 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import logo from "../../assets/pem.png";
 import "./Login.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const Login = () => {
-  const navigate = useNavigate();
+const Login = ({ changePage }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
   const [msg, setMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    let login = localStorage.getItem("login");
-    if (login) {
-      navigate("/dashboard");
-    }
-    let loginStatus = localStorage.getItem("loginStatus");
-    if (loginStatus) {
-      setError(loginStatus);
-      setTimeout(function () {
-        localStorage.clear();
-        window.location.reload();
-      }, 5000);
-    }
-    setTimeout(function () {
-      setMsg("");
-    }, 5000);
-  }, [msg]);
 
   const handleInputChange = (e, type) => {
     switch (type) {
@@ -96,11 +76,10 @@ const Login = () => {
             setMsg(response.result);
             setTimeout(function () {
               localStorage.setItem("login", true);
-              navigate("/dashboard");
+              changePage("dashboard");
             }, 2000);
           }
         })
-
         .catch((err) => {
           console.error("Error in fetching data:", err);
           setError(err.toString());
