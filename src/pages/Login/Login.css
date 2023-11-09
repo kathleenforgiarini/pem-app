@@ -96,14 +96,11 @@
   padding: 1vw;
   margin-top: 1vw;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .error {
   color: red;
-}
-
-.success {
-  color: green;
 }
 
 .passwordLogin {
@@ -122,6 +119,22 @@
   color: black;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.successButton {
+  background-color: white;
+  color: black;
+  transition: background-color 1s, color 1s;
+}
+
+.successContent {
+  display: flex;
+  align-items: center;
+}
+
+.checkmark {
+  color: green;
+  margin-right: 1rem;
 }
 
 @media screen and (max-width: 1000px) {

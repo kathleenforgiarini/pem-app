@@ -24,7 +24,6 @@ const NavBar = ({ changePage }) => {
 
   function logoutSubmit() {
     localStorage.setItem("login", "");
-    localStorage.setItem("loginStatus", "Logged out successfully!");
     changePage("login");
   }
 
