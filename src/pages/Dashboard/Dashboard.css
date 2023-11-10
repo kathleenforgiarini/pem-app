@@ -64,15 +64,14 @@
   font-weight: bold;
 }
 
-.lists {
+.myLists {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 2rem;
-  height: 80vh;
 }
 
-.lists h1 {
+.myLists h1 {
   font-size: 2rem;
   padding: 1rem 0;
 }

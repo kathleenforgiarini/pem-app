@@ -1,15 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
 import logo from "../../assets/pem.png";
 import "./Login.css";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaCheck } from "react-icons/fa";
+import Confetti from "react-confetti";
 
 const Login = ({ changePage }) => {
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("login");
+    if (isLoggedIn) {
+      changePage("dashboard");
+    }
+  }, [changePage]);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
-  const [msg, setMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [msgButtonLogin, setMsgButtonLogin] = useState("Log in");
 
   const handleInputChange = (e, type) => {
     switch (type) {
@@ -71,13 +80,13 @@ const Login = ({ changePage }) => {
             setError(response.result);
           } else {
             localStorage.setItem("userName", response.name);
-            localStorage.setItem("userEmail", response.email);
             localStorage.setItem("userPhoto", response.photo);
-            setMsg(response.result);
+            setMsgButtonLogin("Success");
+            setShowConfetti(true);
             setTimeout(function () {
               localStorage.setItem("login", true);
               changePage("dashboard");
-            }, 2000);
+            }, 3000);
           }
         })
         .catch((err) => {
@@ -131,13 +140,7 @@ const Login = ({ changePage }) => {
           </button>
         </div>
         <div className="inputsLogin">
-          <p>
-            {error !== "" ? (
-              <span className="error">{error}</span>
-            ) : (
-              <span className="success">{msg}</span>
-            )}
-          </p>
+          <p>{error !== "" && <span className="error">{error}</span>}</p>
           {isLogin ? (
             <input
               type="email"
@@ -184,9 +187,34 @@ const Login = ({ changePage }) => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <button className="btnSubmit" type="submit" onClick={loginSubmit}>
-            {isLogin ? "Login" : "Sign Up"}
-          </button>
+
+          {isLogin && (
+            <button
+              className={`btnSubmit ${
+                msgButtonLogin === "Success" ? "successButton" : ""
+              }`}
+              type="submit"
+              onClick={() => {
+                loginSubmit();
+                setShowConfetti(true);
+              }}
+            >
+              {msgButtonLogin === "Success" ? (
+                <div className="successContent">
+                  <FaCheck className="checkmark" />
+                  <span>Success</span>
+                </div>
+              ) : (
+                "Log in"
+              )}
+              {showConfetti && <Confetti />}
+            </button>
+          )}
+          {!isLogin && (
+            <button className="btnSubmit" type="submit" onClick={loginSubmit}>
+              Sign Up
+            </button>
+          )}
         </div>
       </div>
     </section>

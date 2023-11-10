@@ -3,6 +3,7 @@ import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import Modal from "./Modal/Modal";
 import ListCategories from "./ListCategories/ListCategories";
+import List from "./List/List";
 import "./Dashboard.css";
 import { FaPlus } from "react-icons/fa";
 
@@ -46,6 +47,7 @@ const Dashboard = ({ changePage }) => {
         <div className="lists">
           <div className="myLists">
             <h1>My Lists</h1>
+            <List />
           </div>
 
           <div className="sharedLists">

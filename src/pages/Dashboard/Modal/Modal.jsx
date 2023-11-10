@@ -1,4 +1,5 @@
 import "./Modal.css";
+import ListCategories from "../ListCategories/ListCategories";
 
 const Modal = ({ isModalOpen, handleModalClose }) => {
   const handleModalCloseLocal = () => {
@@ -14,6 +15,7 @@ const Modal = ({ isModalOpen, handleModalClose }) => {
           <textarea type="text" placeholder="Descrição"></textarea>
           <select name="" id="">
             <option value="">Select a category</option>
+            <ListCategories />
           </select>
           <input type="number" placeholder="Maximum price" />
           <div className="buttons">
