@@ -1,10 +1,10 @@
 #footer {
   display: flex;
-  position: sticky;
+  position:flex;
   justify-content: center;
   align-items: center;
   background-color: #a173b3;
-  padding: 1rem 8rem;
+  padding: 1rem 6rem;
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
