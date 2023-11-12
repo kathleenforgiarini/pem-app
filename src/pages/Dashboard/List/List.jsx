@@ -28,7 +28,7 @@ const List = () => {
             </select>
           </>
         ) : (
-          <span>Supermarket</span>
+          <span>{category}</span>
         )}
       </div>
       <div className="listName">

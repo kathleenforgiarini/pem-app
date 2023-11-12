@@ -81,6 +81,7 @@ const Login = ({ changePage }) => {
           } else {
             localStorage.setItem("userName", response.name);
             localStorage.setItem("userPhoto", response.photo);
+            localStorage.setItem("userEmail", response.email);
             setMsgButtonLogin("Success");
             setShowConfetti(true);
             setTimeout(function () {
