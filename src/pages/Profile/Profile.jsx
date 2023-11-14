@@ -78,8 +78,42 @@ const Profile = ({ changePage }) => {
     fetchData();
   }, [storedEmail]);
 
-  function saveSubmit() {}
-  function deleteSubmit() {}
+  function saveSubmit() {
+    
+    const updatedData = {
+      email: email,
+      name: name,
+      photo: photo,
+      password: pass,
+    };
+    console.log(updatedData);
+
+    // const isNewUser = !storedEmail;
+    // const endPoint = isNewUser ? "http://localhost/pem-api/register.php" : "http://localhost/pem-api/update.php";
+
+    fetch("http://localhost/pem-api/profile.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    })
+
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error saving/updating Profile:", error);
+    });
+  }
+  function deleteSubmit() {
+
+    const deleteData = {
+      email: storedEmail,
+    };
+
+  }
 
   return (
     <div>

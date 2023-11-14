@@ -55,48 +55,98 @@ const Login = ({ changePage }) => {
   };
 
   function loginSubmit() {
-    if (email !== "" && pass !== "") {
-      var url = "http://localhost/pem-api/login.php";
-      var headers = {
-        Accept: "application/json",
-        "Content-type": "application/json",
-      };
-      var Data = {
-        email: email,
-        pass: pass,
-      };
+    if(isLogin){
 
-      fetch(url, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(Data),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          if (
-            response.result === "Invalid email!" ||
-            response.result === "Invalid password!"
-          ) {
-            setError(response.result);
-          } else {
-            localStorage.setItem("userName", response.name);
-            localStorage.setItem("userPhoto", response.photo);
-            localStorage.setItem("userEmail", response.email);
-            setMsgButtonLogin("Success");
-            setShowConfetti(true);
-            setTimeout(function () {
-              localStorage.setItem("login", true);
-              changePage("dashboard");
-            }, 3000);
-          }
+      if (email !== "" && pass !== "") {
+        var url = "http://localhost/pem-api/login.php";
+        var headers = {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        };
+        var Data = {
+          email: email,
+          pass: pass,
+        };
+  
+        fetch(url, {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(Data),
         })
-        .catch((err) => {
-          console.error("Error in fetching data:", err);
-          setError(err.toString());
-        });
-    } else {
-      setError("All fields are required!");
+          .then((response) => response.json())
+          .then((response) => {
+            if (
+              response.result === "Invalid email!" ||
+              response.result === "Invalid password!"
+            ) {
+              setError(response.result);
+            } else {
+              localStorage.setItem("userName", response.name);
+              localStorage.setItem("userPhoto", response.photo);
+              localStorage.setItem("userEmail", response.email);
+              setMsgButtonLogin("Success");
+              setShowConfetti(true);
+              setTimeout(function () {
+                localStorage.setItem("login", true);
+                changePage("dashboard");
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            console.error("Error in fetching data:", err);
+            setError(err.toString());
+          });
+      } else {
+        setError("All fields are required!");
+      }
+
+
+    }else{
+      // Signup mode logic
+      if (name !== "" && email !== "" && pass !== "") {
+        var url = "http://localhost/pem-api/signup.php"; // Change to the signup endpoint
+        var headers = {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        };
+        var Data = {
+          name: name,
+          email: email,
+          pass: pass,
+        };
+
+        fetch(url, {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(Data),
+        })
+          .then((response) => response.json())
+          .then((response) => {
+            if (response.result === "User already exists!") {
+              setError(response.result);
+            } else {
+              // Handle successful signup
+              localStorage.setItem("userName", response.name);
+              localStorage.setItem("userPhoto", response.photo);
+              localStorage.setItem("userEmail", response.email);
+              setMsgButtonLogin("Success");
+              setShowConfetti(true);
+              setTimeout(function () {
+                localStorage.setItem("login", true);
+                changePage("dashboard");
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            console.error("Error in fetching data:", err);
+            setError(err.toString());
+          });
+      } else {
+        setError("All fields are required!");
+      }
+
     }
+ 
   }
 
   const [isLogin, setIsLogin] = useState(true);
