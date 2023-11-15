@@ -1,21 +1,97 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./List.css";
-import {
-  FaRegSquare,
-  FaTimes,
-  FaAngleDown,
-  FaRegCheckSquare,
-  FaSearch,
-} from "react-icons/fa";
+import { FaAngleDown, FaSearch } from "react-icons/fa";
 import ListCategories from "../ListCategories/ListCategories";
+import Items from "../Items/Items";
 
 const List = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [category, setCategory] = useState("Supermarket");
-  const [listName, setListName] = useState("List 1");
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState("");
+  const [listName, setListName] = useState("");
+  const [description, setDescription] = useState("");
+  const [items, setItems] = useState([]);
 
   const handleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  useEffect(() => {
+    const list = async () => {
+      try {
+        const response = await fetch("http://localhost/pem-api/list.php");
+        const listData = await response.json();
+        setListName(listData.name);
+        setDescription(listData.description);
+        setCategory(listData.list_cat_id);
+
+        const categoriesResponse = await fetch(
+          "http://localhost/pem-api/listCategories.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ list_cat_id: listData.list_cat_id }),
+          }
+        );
+        const categoriesData = await categoriesResponse.json();
+        setCategories(categoriesData);
+        setCategory(listData.list_cat_id);
+
+        const itemsResponse = await fetch("http://localhost/pem-api/item.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ list_id: listData.id }),
+        });
+        const itemsCountData = await itemsResponse.json();
+        setItems(itemsCountData);
+      } catch (error) {
+        console.error("Error", error);
+      }
+    };
+
+    list();
+  }, [isExpanded]);
+
+  const handleCategoryChange = async (e) => {
+    const newCategory = e.target.value;
+
+    if (items.length > 0) {
+      alert("You cannot change the category with items in the list.");
+      return;
+    }
+
+    try {
+      const updateResponse = await fetch(
+        "http://localhost/pem-api/updateListCategory.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            listId: 1,
+            newCategoryId: newCategory,
+          }),
+        }
+      );
+      const data = await updateResponse.json();
+      if (data) {
+        setCategory(newCategory);
+        setCategories((prevCategories) => {
+          return prevCategories.map((cat) =>
+            cat.id === parseInt(newCategory)
+              ? { ...cat, selected: true }
+              : { ...cat, selected: false }
+          );
+        });
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
   };
 
   return (
@@ -23,12 +99,16 @@ const List = () => {
       <div className="listCategory">
         {isExpanded ? (
           <>
-            <select onChange={(e) => setCategory(e.target.value)}>
+            <select
+              className="selectCategory"
+              onChange={handleCategoryChange}
+              value={category}
+            >
               <ListCategories />
             </select>
           </>
         ) : (
-          <span>{category}</span>
+          <span>{categories.find((cat) => cat.id === category)?.name}</span>
         )}
       </div>
       <div className="listName">
@@ -37,6 +117,7 @@ const List = () => {
             <input
               type="text"
               value={listName}
+              className="name"
               onChange={(e) => setListName(e.target.value)}
             />
           </>
@@ -49,7 +130,11 @@ const List = () => {
       {isExpanded && (
         <div className="items">
           <div className="descSearch">
-            <textarea className="description" placeholder="Description" />
+            <textarea
+              className="description"
+              placeholder="Description"
+              // defaultValue={description}
+            />
             <div className="searchItems">
               <input type="text" placeholder="Search" />
               <label className="searchIcon" htmlFor="searchInput">
@@ -57,29 +142,7 @@ const List = () => {
               </label>
             </div>
           </div>
-
-          <div className="listItems">
-            <div className="item">
-              <FaRegSquare />
-              <p>Item 1</p>
-              <p>2</p>
-              <p>$15</p>
-              <p>Kitchen</p>
-              <FaTimes />
-            </div>
-            <div className="completedItems">
-              <div className="completedItem">
-                <div>Done</div>
-                <FaAngleDown />
-                <FaRegCheckSquare />
-                <p>Item 2</p>
-                <p>2</p>
-                <p>$15</p>
-                <p>Kitchen</p>
-                <FaTimes />
-              </div>
-            </div>
-          </div>
+          <Items items={items} list_category={category} />
         </div>
       )}
       <div className="listPrice">

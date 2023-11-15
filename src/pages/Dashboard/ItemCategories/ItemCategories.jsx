@@ -1,34 +1,34 @@
 import React, { useState, useEffect } from "react";
 
-const ListCategories = () => {
-  const [categories, setCategories] = useState([]);
+const ItemCategories = (props) => {
+  const [categoriesItem, setCategoriesItem] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "http://localhost/pem-api/listCategories.php",
+          "http://localhost/pem-api/itemCategories.php",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ list_cat_id: 0 }),
+            body: JSON.stringify({ list: props.list }),
           }
         );
         const data = await response.json();
-        setCategories(data);
+        setCategoriesItem(data);
       } catch (error) {
         console.error("Error", error);
       }
     };
 
     fetchCategories();
-  }, []);
+  }, [props]);
 
   return (
     <>
-      {categories.map((category) => (
+      {categoriesItem.map((category) => (
         <option key={category.id} value={category.id}>
           {category.name}
         </option>
@@ -37,4 +37,4 @@ const ListCategories = () => {
   );
 };
 
-export default ListCategories;
+export default ItemCategories;

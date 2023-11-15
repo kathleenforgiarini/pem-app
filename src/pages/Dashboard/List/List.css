@@ -14,6 +14,18 @@
   border: 1px solid gray;
 }
 
+.selectCategory {
+  padding: 0.2rem;
+  border: 1px solid rgb(146, 146, 146);
+  border-radius: 0.3rem;
+}
+
+.name {
+  padding: 0.2rem;
+  border: 1px solid rgb(146, 146, 146);
+  border-radius: 0.3rem;
+}
+
 .listName {
   font-size: 1.2rem;
   font-weight: bold;
@@ -63,7 +75,7 @@
 .searchItems input {
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px;
   margin: 0 1rem;
   flex: 1;
 }
@@ -74,35 +86,4 @@
   right: 30px;
   transform: translateY(-50%);
   color: #aaa;
-}
-
-.listItems {
-  display: flex;
-  flex-direction: column;
-}
-
-.item,
-.completedItem {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.item p {
-  margin: 0;
-  margin-right: 10px;
-}
-
-.completedItem p {
-  margin: 0;
-  margin-right: 10px;
-}
-
-.listItems svg {
-  margin-right: 10px;
-}
-
-.listItems > div {
-  display: flex;
-  align-items: center;
 }

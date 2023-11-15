@@ -1,0 +1,96 @@
+.listItems {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bothItems {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.item,
+.completedItem {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item .square {
+  color: rgb(64, 64, 163);
+  cursor: pointer;
+}
+
+.item .times {
+  color: rgb(160, 6, 6);
+  cursor: pointer;
+}
+
+.item .itemName {
+  border: none;
+  width: 6rem;
+}
+
+.item .itemQuantity {
+  border: none;
+  width: 2rem;
+}
+
+.item .itemPrice {
+  border: none;
+  width: 2rem;
+}
+
+.item .itemCategory {
+  border: none;
+}
+
+.completedItem .itemName {
+  border: none;
+  width: 6rem;
+  text-decoration: line-through;
+}
+
+.completedItem .itemQuantity {
+  border: none;
+  width: 2rem;
+  text-decoration: line-through;
+}
+
+.completedItem .itemPrice {
+  border: none;
+  width: 2rem;
+  text-decoration: line-through;
+}
+
+.completedItem .itemCategory {
+  border: none;
+  text-decoration: line-through;
+}
+
+.completedItem .square {
+  color: green;
+  cursor: pointer;
+}
+
+.completedItem .times {
+  color: rgb(160, 6, 6);
+  cursor: pointer;
+}
+
+.item p,
+.completedItem p {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.listItems > div {
+  display: flex;
+  align-items: center;
+}
