@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "./List.css";
+import "./Lists.css";
 import { FaAngleDown, FaSearch } from "react-icons/fa";
 import ListCategories from "../ListCategories/ListCategories";
 import Items from "../Items/Items";
 
-const List = () => {
+const List = ({ list }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
@@ -17,13 +17,11 @@ const List = () => {
   };
 
   useEffect(() => {
-    const list = async () => {
+    const listcat = async () => {
       try {
-        const response = await fetch("http://localhost/pem-api/list.php");
-        const listData = await response.json();
-        setListName(listData.name);
-        setDescription(listData.description);
-        setCategory(listData.list_cat_id);
+        setListName(list.name);
+        setDescription(list.description);
+        setCategory(list.list_cat_id);
 
         const categoriesResponse = await fetch(
           "http://localhost/pem-api/listCategories.php",
@@ -32,19 +30,19 @@ const List = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ list_cat_id: listData.list_cat_id }),
+            body: JSON.stringify({ list_cat_id: list.list_cat_id }),
           }
         );
         const categoriesData = await categoriesResponse.json();
         setCategories(categoriesData);
-        setCategory(listData.list_cat_id);
+        setCategory(list.list_cat_id);
 
         const itemsResponse = await fetch("http://localhost/pem-api/item.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ list_id: listData.id }),
+          body: JSON.stringify({ list_id: list.id }),
         });
         const itemsCountData = await itemsResponse.json();
         setItems(itemsCountData);
@@ -53,8 +51,8 @@ const List = () => {
       }
     };
 
-    list();
-  }, [isExpanded]);
+    listcat();
+  }, [isExpanded, list]);
 
   const handleCategoryChange = async (e) => {
     const newCategory = e.target.value;
@@ -73,7 +71,7 @@ const List = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            listId: 1,
+            listId: list.id,
             newCategoryId: newCategory,
           }),
         }
@@ -134,7 +132,7 @@ const List = () => {
             <textarea
               className="description"
               placeholder="Description"
-              // defaultValue={description}
+              defaultValue={description}
             />
             <div className="searchItems">
               <input type="text" placeholder="Search" />
@@ -143,7 +141,7 @@ const List = () => {
               </label>
             </div>
           </div>
-          <Items items={items} list_category={category} />
+          <Items list_id={list.id} list_category={list.list_cat_id} />
         </div>
       )}
       <div className="listPrice">

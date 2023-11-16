@@ -5,18 +5,35 @@ import { FaCheck, FaPlus } from "react-icons/fa";
 import ItemCategories from "../ItemCategories/ItemCategories";
 import Item from "./Item";
 
-const Items = ({ items, list_category }) => {
-  const [updatedItems, setUpdatedItems] = useState(items);
+const Items = ({ list_id, list_category }) => {
+  const [updatedItems, setUpdatedItems] = useState([]);
   const [item, setItem] = useState({
     name: "",
     quantity: "",
     price: "",
+    list_id: list_id,
     category: 1,
   });
 
   useEffect(() => {
-    setUpdatedItems(items);
-  }, [items]);
+    const itensList = async () => {
+      try {
+        const itemsResponse = await fetch("http://localhost/pem-api/item.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ list_id: list_id }),
+        });
+        const items = await itemsResponse.json();
+        setUpdatedItems(items);
+      } catch (error) {
+        console.error("Error", error);
+      }
+    };
+
+    itensList();
+  }, [list_id]);
 
   const listItems = async () => {
     try {
@@ -25,7 +42,7 @@ const Items = ({ items, list_category }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ list_id: 1 }),
+        body: JSON.stringify({ list_id: list_id }),
       });
       const itemsCountData = await itemsResponse.json();
       setUpdatedItems(itemsCountData);
@@ -114,6 +131,7 @@ const Items = ({ items, list_category }) => {
           name: "",
           quantity: "",
           price: "",
+          list_id: "",
           category: 1,
         });
         listItems();
@@ -124,10 +142,6 @@ const Items = ({ items, list_category }) => {
       console.error("Error creating item", error);
     }
   };
-
-  useEffect(() => {
-    listItems();
-  }, [updatedItems]);
 
   const sortedItems = [...updatedItems].sort((a, b) => a.done - b.done);
 
@@ -151,6 +165,11 @@ const Items = ({ items, list_category }) => {
       ))}
       <div className="newItem">
         <FaPlus className="plus" />
+        <input
+          type="hidden"
+          value={list_id}
+          onChange={(e) => setItem({ ...item, list_id: e.target.value })}
+        />
         <input
           type="text"
           className="itemName"

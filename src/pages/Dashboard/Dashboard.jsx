@@ -1,16 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import Modal from "./Modal/Modal";
 import ListCategories from "./ListCategories/ListCategories";
-import List from "./List/List";
+import Lists from "./List/Lists";
 import "./Dashboard.css";
 import { FaPlus } from "react-icons/fa";
 
 const Dashboard = ({ changePage }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lists, setLists] = useState([]);
   const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const list = async () => {
+      try {
+        const response = await fetch("http://localhost/pem-api/list.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: userId }),
+        });
+        const listData = await response.json();
+        setLists(listData);
+      } catch (error) {
+        console.error("Error", error);
+      }
+    };
+
+    list();
+  }, [userId]);
 
   const handleNewListClick = () => {
     setIsModalOpen(true);
@@ -48,7 +69,7 @@ const Dashboard = ({ changePage }) => {
         <div className="lists">
           <div className="myLists">
             <h1>My Lists</h1>
-            <List />
+            <Lists lists={lists} />
           </div>
 
           <div className="sharedLists">
