@@ -118,6 +118,7 @@ const List = () => {
               type="text"
               value={listName}
               className="name"
+              placeholder="Name"
               onChange={(e) => setListName(e.target.value)}
             />
           </>

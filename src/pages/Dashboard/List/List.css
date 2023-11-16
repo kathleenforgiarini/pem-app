@@ -87,3 +87,9 @@
   transform: translateY(-50%);
   color: #aaa;
 }
+
+@media screen and (max-width: 400px) {
+  .list {
+    overflow: scroll;
+  }
+}

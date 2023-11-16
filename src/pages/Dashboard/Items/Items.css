@@ -22,56 +22,34 @@
   margin-bottom: 10px;
 }
 
+.item input,
+.item select,
+.completedItem input,
+.completedItem select {
+  border: none;
+}
+
+.completedItem {
+  text-decoration: line-through;
+}
+
 .item .square {
   color: rgb(64, 64, 163);
   cursor: pointer;
 }
 
-.item .times {
+.times {
   color: rgb(160, 6, 6);
   cursor: pointer;
 }
 
-.item .itemName {
-  border: none;
+.itemName {
   width: 6rem;
 }
 
-.item .itemQuantity {
-  border: none;
+.itemQuantity,
+.itemPrice {
   width: 2rem;
-}
-
-.item .itemPrice {
-  border: none;
-  width: 2rem;
-}
-
-.item .itemCategory {
-  border: none;
-}
-
-.completedItem .itemName {
-  border: none;
-  width: 6rem;
-  text-decoration: line-through;
-}
-
-.completedItem .itemQuantity {
-  border: none;
-  width: 2rem;
-  text-decoration: line-through;
-}
-
-.completedItem .itemPrice {
-  border: none;
-  width: 2rem;
-  text-decoration: line-through;
-}
-
-.completedItem .itemCategory {
-  border: none;
-  text-decoration: line-through;
 }
 
 .completedItem .square {
@@ -79,18 +57,47 @@
   cursor: pointer;
 }
 
-.completedItem .times {
-  color: rgb(160, 6, 6);
+.newItem {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: 20px;
+  border-top: 1px solid gray;
+  padding-top: 1rem;
+}
+
+.newItem input,
+.newItem select {
+  border: 0.1px solid gray;
+  color: gray;
+}
+
+.newItem .plus {
+  color: gray;
+  margin: 0;
+}
+
+.newItem .check {
+  color: rgb(77, 146, 77);
   cursor: pointer;
 }
 
-.item p,
-.completedItem p {
-  margin: 0;
-  margin-right: 10px;
+.labels {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  font-size: 0.7rem;
 }
 
-.listItems > div {
-  display: flex;
-  align-items: center;
+.labels::after {
+  content: "";
+}
+
+.labels::before {
+  content: "";
 }
