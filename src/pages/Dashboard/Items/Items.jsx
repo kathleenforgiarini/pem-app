@@ -1,83 +1,22 @@
+// Items.js
 import React, { useState, useEffect } from "react";
 import "./Items.css";
-import {
-  FaRegSquare,
-  FaTimes,
-  FaRegCheckSquare,
-  FaCheck,
-  FaPlus,
-} from "react-icons/fa";
+import { FaCheck, FaPlus } from "react-icons/fa";
 import ItemCategories from "../ItemCategories/ItemCategories";
+import Item from "./Item";
 
 const Items = ({ items, list_category }) => {
   const [updatedItems, setUpdatedItems] = useState(items);
+  const [item, setItem] = useState({
+    name: "",
+    quantity: "",
+    price: "",
+    category: 1,
+  });
 
   useEffect(() => {
     setUpdatedItems(items);
   }, [items]);
-
-  const handleItemChange = async (itemId, field, value) => {
-    try {
-      const updateResponse = await fetch(
-        "http://localhost/pem-api/updateItem.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            itemId: itemId,
-            field: field,
-            value: value,
-          }),
-        }
-      );
-      const data = await updateResponse.json();
-      if (data) {
-        listItems();
-      }
-    } catch (error) {
-      console.error("Error", error);
-    }
-  };
-
-  const handleToggleDone = async (itemId, value) => {
-    const newDone = value === "1" ? "0" : "1";
-
-    try {
-      handleItemChange(itemId, "done", newDone);
-    } catch (error) {
-      console.error("Error", error);
-    }
-  };
-
-  const deleteItem = async (itemId) => {
-    try {
-      const updateResponse = await fetch(
-        "http://localhost/pem-api/deleteItem.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            itemId: itemId,
-          }),
-        }
-      );
-      const data = await updateResponse.json();
-      if (data) {
-        listItems();
-      }
-    } catch (error) {
-      console.error("Error", error);
-    }
-  };
-
-  const [itemName, setItemName] = useState("");
-  const [itemQuantity, setItemQuantity] = useState("");
-  const [itemPrice, setItemPrice] = useState("");
-  const [itemCategory, setItemCategory] = useState(1);
 
   const listItems = async () => {
     try {
@@ -95,6 +34,68 @@ const Items = ({ items, list_category }) => {
     }
   };
 
+  const handleItemChange = async (itemId, field, value) => {
+    try {
+      const updateResponse = await fetch(
+        "http://localhost/pem-api/updateItem.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            itemId,
+            field,
+            value,
+          }),
+        }
+      );
+      const data = await updateResponse.json();
+      if (data) {
+        listItems();
+      } else {
+        alert("Error! Try again...");
+      }
+    } catch (error) {
+      console.error("Error updating item", error);
+    }
+  };
+
+  const handleToggleDone = async (itemId, value) => {
+    const newDone = value === "1" ? "0" : "1";
+
+    try {
+      await handleItemChange(itemId, "done", newDone);
+    } catch (error) {
+      console.error("Error toggling item done", error);
+    }
+  };
+
+  const deleteItem = async (itemId) => {
+    try {
+      const updateResponse = await fetch(
+        "http://localhost/pem-api/deleteItem.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            itemId,
+          }),
+        }
+      );
+      const data = await updateResponse.json();
+      if (data) {
+        listItems();
+      } else {
+        alert("Error! Try again...");
+      }
+    } catch (error) {
+      console.error("Error deleting item", error);
+    }
+  };
+
   const newItem = async () => {
     try {
       const insertResponse = await fetch(
@@ -104,26 +105,29 @@ const Items = ({ items, list_category }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            name: itemName,
-            quantity: itemQuantity,
-            price: itemPrice,
-            category: itemCategory,
-          }),
+          body: JSON.stringify(item),
         }
       );
       const data = await insertResponse.json();
       if (data) {
-        setItemName("");
-        setItemQuantity("");
-        setItemPrice("");
-        setItemCategory(1);
+        setItem({
+          name: "",
+          quantity: "",
+          price: "",
+          category: 1,
+        });
         listItems();
+      } else {
+        alert("Error! Try again...");
       }
     } catch (error) {
-      console.error("Error", error);
+      console.error("Error creating item", error);
     }
   };
+
+  useEffect(() => {
+    listItems();
+  }, [updatedItems]);
 
   const sortedItems = [...updatedItems].sort((a, b) => a.done - b.done);
 
@@ -136,118 +140,39 @@ const Items = ({ items, list_category }) => {
         <span>Category</span>
       </div>
       {sortedItems.map((item) => (
-        <div key={item.id} className="bothItems">
-          {item.done === "0" ? (
-            <div className="item">
-              <FaRegSquare
-                className="square"
-                onClick={() => handleToggleDone(item.id, item.done)}
-              />
-              <input
-                type="text"
-                value={item.name}
-                className="itemName"
-                onChange={(e) =>
-                  handleItemChange(item.id, "name", e.target.value)
-                }
-              />
-              <input
-                type="text"
-                value={item.quantity}
-                className="itemQuantity"
-                onChange={(e) =>
-                  handleItemChange(item.id, "quantity", e.target.value)
-                }
-              />
-              <input
-                type="text"
-                value={item.price}
-                className="itemPrice"
-                onChange={(e) =>
-                  handleItemChange(item.id, "price", e.target.value)
-                }
-              />
-
-              <select
-                className="itemCategory"
-                value={item.item_cat_id}
-                onChange={(e) =>
-                  handleItemChange(item.id, "item_cat_id", e.target.value)
-                }
-              >
-                <ItemCategories list={list_category} />
-              </select>
-              <FaTimes className="times" onClick={() => deleteItem(item.id)} />
-            </div>
-          ) : (
-            <div className="completedItem">
-              <FaRegCheckSquare
-                className="square"
-                onClick={() => handleToggleDone(item.id, item.done)}
-              />
-              <input
-                type="text"
-                value={item.name}
-                className="itemName"
-                onChange={(e) =>
-                  handleItemChange(item.id, "name", e.target.value)
-                }
-              />
-              <input
-                type="text"
-                value={item.quantity}
-                className="itemQuantity"
-                onChange={(e) =>
-                  handleItemChange(item.id, "quantity", e.target.value)
-                }
-              />
-              <input
-                type="text"
-                value={item.price}
-                className="itemPrice"
-                onChange={(e) =>
-                  handleItemChange(item.id, "price", e.target.value)
-                }
-              />
-
-              <select
-                className="itemCategory"
-                value={item.item_cat_id}
-                onChange={(e) =>
-                  handleItemChange(item.id, "item_cat_id", e.target.value)
-                }
-              >
-                <ItemCategories list={list_category} />
-              </select>
-              <FaTimes className="times" onClick={() => deleteItem(item.id)} />
-            </div>
-          )}
-        </div>
+        <Item
+          key={item.id}
+          item={item}
+          handleToggleDone={handleToggleDone}
+          handleItemChange={handleItemChange}
+          deleteItem={deleteItem}
+          list_category={list_category}
+        />
       ))}
       <div className="newItem">
         <FaPlus className="plus" />
         <input
           type="text"
           className="itemName"
-          value={itemName}
-          onChange={(e) => setItemName(e.target.value)}
+          value={item.name}
+          onChange={(e) => setItem({ ...item, name: e.target.value })}
         />
         <input
-          type="text"
+          type="number"
           className="itemQuantity"
-          value={itemQuantity}
-          onChange={(e) => setItemQuantity(e.target.value)}
+          value={item.quantity}
+          onChange={(e) => setItem({ ...item, quantity: e.target.value })}
         />
         <input
-          type="text"
+          type="number"
           className="itemPrice"
-          value={itemPrice}
-          onChange={(e) => setItemPrice(e.target.value)}
+          value={item.price}
+          onChange={(e) => setItem({ ...item, price: e.target.value })}
         />
         <select
           className="itemCategory"
-          value={itemCategory ? itemCategory : 1}
-          onChange={(e) => setItemCategory(e.target.value)}
+          value={item.category}
+          onChange={(e) => setItem({ ...item, category: e.target.value })}
         >
           <ItemCategories list={list_category} />
         </select>
