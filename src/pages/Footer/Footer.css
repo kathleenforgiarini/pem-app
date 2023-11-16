@@ -1,14 +1,15 @@
 #footer {
-  display: flex;
   position: fixed;
-  justify-content: center;
-  align-items: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   background-color: #a173b3;
   padding: 1rem 6rem;
-  bottom: 0;
-  width: 100%;
   box-sizing: border-box;
   color: rgb(56, 56, 56);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 500px) {
