@@ -40,6 +40,10 @@
   background-color: #ececec;
 }
 
+.listName span {
+  margin-right: 1rem;
+}
+
 .listPrice {
   padding: 0.5rem;
   display: flex;

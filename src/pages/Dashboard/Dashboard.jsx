@@ -10,6 +10,7 @@ import { FaPlus } from "react-icons/fa";
 const Dashboard = ({ changePage }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const userId = localStorage.getItem("userId");
 
   const handleNewListClick = () => {
     setIsModalOpen(true);

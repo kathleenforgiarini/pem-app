@@ -1,7 +1,6 @@
 #footer {
   display: flex;
-  position:relative;
-  z-index: 1;
+  position: fixed;
   justify-content: center;
   align-items: center;
   background-color: #a173b3;

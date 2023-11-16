@@ -55,8 +55,7 @@ const Login = ({ changePage }) => {
   };
 
   function loginSubmit() {
-    if(isLogin){
-
+    if (isLogin) {
       if (email !== "" && pass !== "") {
         var url = "http://localhost/pem-api/login.php";
         var headers = {
@@ -67,7 +66,7 @@ const Login = ({ changePage }) => {
           email: email,
           pass: pass,
         };
-  
+
         fetch(url, {
           method: "POST",
           headers: headers,
@@ -88,6 +87,7 @@ const Login = ({ changePage }) => {
               setShowConfetti(true);
               setTimeout(function () {
                 localStorage.setItem("login", true);
+                localStorage.setItem("userId", response.id);
                 changePage("dashboard");
               }, 3000);
             }
@@ -99,9 +99,7 @@ const Login = ({ changePage }) => {
       } else {
         setError("All fields are required!");
       }
-
-
-    }else{
+    } else {
       // Signup mode logic
       if (name !== "" && email !== "" && pass !== "") {
         var url = "http://localhost/pem-api/signup.php"; // Change to the signup endpoint
@@ -144,9 +142,7 @@ const Login = ({ changePage }) => {
       } else {
         setError("All fields are required!");
       }
-
     }
- 
   }
 
   const [isLogin, setIsLogin] = useState(true);
@@ -273,4 +269,3 @@ const Login = ({ changePage }) => {
 };
 
 export default Login;
-
