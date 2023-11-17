@@ -127,11 +127,16 @@ const Login = ({ changePage }) => {
               localStorage.setItem("userName", response.name);
               localStorage.setItem("userPhoto", response.photo);
               localStorage.setItem("userEmail", response.email);
-              setMsgButtonLogin("Success");
-              setShowConfetti(true);
+              
               setTimeout(function () {
                 localStorage.setItem("login", true);
-                changePage("dashboard");
+                //switch to login mode
+                setIsLogin(true);
+                //wait the user press the login button
+                setMsgButtonLogin("Log in");
+                setShowConfetti(false);
+                changePage("login");
+                
               }, 3000);
             }
           })
