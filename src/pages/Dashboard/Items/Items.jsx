@@ -7,6 +7,9 @@ import Item from "./Item";
 const Items = ({ list_id, list_category, handleChildPrice }) => {
   const [updatedItems, setUpdatedItems] = useState([]);
   const [itemCategory, setItemCategory] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [itemQuantity, setItemQuantity] = useState("");
+  const [itemPrice, setItemPrice] = useState("");
 
   const listItems = useCallback(async () => {
     try {
@@ -19,6 +22,8 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
       });
       const itemsCountData = await itemsResponse.json();
       setUpdatedItems(itemsCountData);
+      const select = document.getElementsByName("newItemCategory");
+      setItemCategory(select[0].options[0].value);
     } catch (error) {
       console.error("Error listing items", error);
     }
@@ -46,13 +51,6 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
 
     fetchData();
   }, [listItems, list_id]);
-
-  const getFirstOptionValue = () => {
-    const firstOption = document.querySelector(
-      ".newItem .itemCategory option:first-child"
-    );
-    return firstOption ? firstOption.value : "";
-  };
 
   const calculateTotalPrice = useCallback(() => {
     const total = updatedItems.reduce((accumulator, item) => {
@@ -131,6 +129,8 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
 
   const newItem = async () => {
     try {
+      console.log(list_id);
+      console.log(itemCategory);
       const insertResponse = await fetch(
         "http://localhost/pem-api/createItem.php",
         {
@@ -139,21 +139,19 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name: document.querySelector(".newItem .itemName").value,
-            quantity: document.querySelector(".newItem .itemQuantity").value,
-            price: document.querySelector(".newItem .itemPrice").value,
+            name: itemName,
+            quantity: itemQuantity,
+            price: itemPrice,
             list_id: list_id,
-            item_cat_id: itemCategory || getFirstOptionValue(),
+            item_cat_id: itemCategory,
           }),
         }
       );
+
       await listItems();
       const data = await insertResponse.json();
       if (data) {
         listItems();
-        document.querySelector(".newItem .itemName").value = "";
-        document.querySelector(".newItem .itemQuantity").value = "";
-        document.querySelector(".newItem .itemPrice").value = "";
       } else {
         alert("Error! Try again...");
       }
@@ -184,11 +182,27 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
       ))}
       <div className="newItem">
         <FaPlus className="plus" />
-        <input type="text" className="itemName" />
-        <input type="number" className="itemQuantity" />
-        <input type="number" className="itemPrice" />
+        <input
+          type="text"
+          className="itemName"
+          value={itemName}
+          onChange={(e) => setItemName(e.target.value)}
+        />
+        <input
+          type="number"
+          className="itemQuantity"
+          value={itemQuantity}
+          onChange={(e) => setItemQuantity(e.target.value)}
+        />
+        <input
+          type="number"
+          className="itemPrice"
+          value={itemPrice}
+          onChange={(e) => setItemPrice(e.target.value)}
+        />
         <select
           className="itemCategory"
+          name="newItemCategory"
           value={itemCategory}
           onChange={(e) => setItemCategory(e.target.value)}
         >
