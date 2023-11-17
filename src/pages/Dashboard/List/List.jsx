@@ -8,6 +8,7 @@ const List = ({ list }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [listState, setListState] = useState({
     id: list.id,
     name: list.name,
@@ -20,6 +21,22 @@ const List = ({ list }) => {
   const handleExpand = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const handleChildPrice = useCallback(
+    (price) => {
+      setTotalPrice(price);
+    },
+    [setTotalPrice]
+  );
+
+  useEffect(() => {
+    if (items.length > 0) {
+      const total = items.reduce((accumulator, item) => {
+        return accumulator + parseFloat(item.price);
+      }, 0);
+      handleChildPrice(total);
+    }
+  }, [items, handleChildPrice]);
 
   const fetchCategories = useCallback(async () => {
     try {
@@ -151,11 +168,15 @@ const List = ({ list }) => {
               </label>
             </div>
           </div>
-          <Items list_id={listState.id} list_category={listState.list_cat_id} />
+          <Items
+            list_id={listState.id}
+            list_category={listState.list_cat_id}
+            handleChildPrice={handleChildPrice}
+          />
         </div>
       )}
       <div className="listPrice">
-        <span>Total</span> $250
+        <span>Total</span> ${totalPrice}
       </div>
     </div>
   );

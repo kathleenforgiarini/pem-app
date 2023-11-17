@@ -4,9 +4,10 @@ import { FaCheck, FaPlus } from "react-icons/fa";
 import ItemCategories from "../ItemCategories/ItemCategories";
 import Item from "./Item";
 
-const Items = ({ list_id, list_category }) => {
+const Items = ({ list_id, list_category, handleChildPrice }) => {
   const [updatedItems, setUpdatedItems] = useState([]);
   const [itemCategory, setItemCategory] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const listItems = useCallback(async () => {
     try {
@@ -53,6 +54,20 @@ const Items = ({ list_id, list_category }) => {
     );
     return firstOption ? firstOption.value : "";
   };
+
+  const calculateTotalPrice = useCallback(() => {
+    const total = updatedItems.reduce((accumulator, item) => {
+      return accumulator + parseFloat(item.price);
+    }, 0);
+
+    return total;
+  }, [updatedItems]);
+
+  useEffect(() => {
+    const total = calculateTotalPrice();
+    setTotalPrice(total);
+    handleChildPrice(total);
+  }, [calculateTotalPrice, handleChildPrice]);
 
   const handleItemChange = async (itemId, field, value) => {
     try {
