@@ -30,6 +30,11 @@ const List = ({ list }) => {
   );
 
   useEffect(() => {
+    handleListChange("total_price", totalPrice);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPrice]);
+
+  useEffect(() => {
     if (items.length > 0) {
       const total = items.reduce((accumulator, item) => {
         return accumulator + parseFloat(item.price);

@@ -7,7 +7,6 @@ import Item from "./Item";
 const Items = ({ list_id, list_category, handleChildPrice }) => {
   const [updatedItems, setUpdatedItems] = useState([]);
   const [itemCategory, setItemCategory] = useState("");
-  const [totalPrice, setTotalPrice] = useState(0);
 
   const listItems = useCallback(async () => {
     try {
@@ -65,7 +64,6 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
 
   useEffect(() => {
     const total = calculateTotalPrice();
-    setTotalPrice(total);
     handleChildPrice(total);
   }, [calculateTotalPrice, handleChildPrice]);
 
