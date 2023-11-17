@@ -10,28 +10,12 @@ import { FaPlus } from "react-icons/fa";
 const Dashboard = ({ changePage }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lists, setLists] = useState([]);
   const userId = localStorage.getItem("userId");
+  const [totalPriceAllLists, setTotalPriceAllLists] = useState(0);
 
-  useEffect(() => {
-    const list = async () => {
-      try {
-        const response = await fetch("http://localhost/pem-api/list.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId: userId }),
-        });
-        const listData = await response.json();
-        setLists(listData);
-      } catch (error) {
-        console.error("Error", error);
-      }
-    };
-
-    list();
-  }, [userId]);
+  const calculateTotalPriceAllLists = (price) => {
+    setTotalPriceAllLists(price);
+  };
 
   const handleNewListClick = () => {
     setIsModalOpen(true);
@@ -64,12 +48,15 @@ const Dashboard = ({ changePage }) => {
             </select>
             <input type="text" placeholder="Search" />
           </div>
-          <p className="totalLists">$8000</p>
+          <p className="totalLists">${totalPriceAllLists}</p>
         </div>
         <div className="lists">
           <div className="myLists">
             <h1>My Lists</h1>
-            <Lists lists={lists} />
+            <Lists
+              userId={userId}
+              calculateTotalPriceAllLists={calculateTotalPriceAllLists}
+            />
           </div>
 
           <div className="sharedLists">

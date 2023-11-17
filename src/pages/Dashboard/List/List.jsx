@@ -4,7 +4,7 @@ import { FaAngleDown, FaSearch } from "react-icons/fa";
 import ListCategories from "../ListCategories/ListCategories";
 import Items from "../Items/Items";
 
-const List = ({ list }) => {
+const List = ({ list, listLists }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
@@ -31,6 +31,8 @@ const List = ({ list }) => {
 
   useEffect(() => {
     handleListChange("total_price", totalPrice);
+    listLists();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalPrice]);
 
@@ -40,8 +42,9 @@ const List = ({ list }) => {
         return accumulator + parseFloat(item.price);
       }, 0);
       handleChildPrice(total);
+      listLists();
     }
-  }, [items, handleChildPrice]);
+  }, [items, handleChildPrice, listLists]);
 
   const fetchCategories = useCallback(async () => {
     try {
@@ -81,7 +84,8 @@ const List = ({ list }) => {
   useEffect(() => {
     fetchItems();
     fetchCategories();
-  }, [listState, isExpanded, fetchItems, fetchCategories]);
+    listLists();
+  }, [listState, isExpanded, fetchItems, fetchCategories, listLists]);
 
   const handleListChange = async (field, value) => {
     try {
