@@ -68,6 +68,7 @@ const Profile = ({ changePage }) => {
           body: JSON.stringify({ email: storedEmail }),
         });
         const data = await response.json();
+        console.log("Fetched Data: ", data);
         setName(data.name);
         setPhoto(data.photo);
         setPass(data.password);
