@@ -4,7 +4,7 @@ const ListCategories = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    (async () => {
       try {
         const response = await fetch(
           "http://localhost/pem-api/listCategories.php",
@@ -21,9 +21,7 @@ const ListCategories = () => {
       } catch (error) {
         console.error("Error", error);
       }
-    };
-
-    fetchCategories();
+    })();
   }, []);
 
   return (

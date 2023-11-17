@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const ItemCategories = (props) => {
+const ItemCategories = (list) => {
   const [categoriesItem, setCategoriesItem] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const ItemCategories = (props) => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ list: props.list }),
+            body: JSON.stringify({ list: list.list }),
           }
         );
         const data = await response.json();
@@ -24,7 +24,7 @@ const ItemCategories = (props) => {
     };
 
     fetchCategories();
-  }, [props]);
+  }, [list]);
 
   return (
     <>
