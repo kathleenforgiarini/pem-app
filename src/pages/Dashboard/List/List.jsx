@@ -9,6 +9,7 @@ const List = ({ list, listLists }) => {
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [totalPriceColor, setTotalPriceColor] = useState("green");
   const [listState, setListState] = useState({
     id: list.id,
     name: list.name,
@@ -30,6 +31,11 @@ const List = ({ list, listLists }) => {
   );
 
   useEffect(() => {
+    if (totalPrice > listState.max_price) {
+      setTotalPriceColor("red");
+    } else {
+      setTotalPriceColor("green");
+    }
     handleListChange("total_price", totalPrice);
     listLists();
 
@@ -162,29 +168,43 @@ const List = ({ list, listLists }) => {
       </div>
 
       {isExpanded && (
-        <div className="items">
-          <div className="descSearch">
-            <textarea
-              className="description"
-              placeholder="Description"
-              value={listState.description}
-              onChange={(e) => handleListChange("description", e.target.value)}
-            />
-            {/* <div className="searchItems">
+        <>
+          <div className="items">
+            <div className="descSearch">
+              <textarea
+                className="description"
+                placeholder="Description"
+                value={listState.description}
+                onChange={(e) =>
+                  handleListChange("description", e.target.value)
+                }
+              />
+              {/* <div className="searchItems">
               <input type="text" placeholder="Search" />
               <label className="searchIcon" htmlFor="searchInput">
                 <FaSearch />
               </label>
             </div> */}
+            </div>
+            <Items
+              list_id={listState.id}
+              list_category={listState.list_cat_id}
+              handleChildPrice={handleChildPrice}
+            />
           </div>
-          <Items
-            list_id={listState.id}
-            list_category={listState.list_cat_id}
-            handleChildPrice={handleChildPrice}
-          />
-        </div>
+          <div className="listFunctions">
+            <div className="maxPrice">
+              <label>Maximum price</label>
+              <input
+                type="number"
+                value={listState.max_price}
+                onChange={(e) => handleListChange("max_price", e.target.value)}
+              />
+            </div>
+          </div>
+        </>
       )}
-      <div className="listPrice">
+      <div className="listPrice" style={{ color: totalPriceColor }}>
         <span>Total</span> ${totalPrice}
       </div>
     </div>
