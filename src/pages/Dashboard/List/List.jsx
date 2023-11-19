@@ -40,7 +40,7 @@ const List = ({ list, listLists }) => {
     listLists();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalPrice]);
+  }, [totalPrice, listState.max_price]);
 
   useEffect(() => {
     if (items.length > 0) {
@@ -194,7 +194,7 @@ const List = ({ list, listLists }) => {
           </div>
           <div className="listFunctions">
             <div className="maxPrice">
-              <label>Maximum price</label>
+              <label>Maximum price $</label>
               <input
                 type="number"
                 value={listState.max_price}

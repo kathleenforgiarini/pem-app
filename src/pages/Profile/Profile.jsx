@@ -68,7 +68,6 @@ const Profile = ({ changePage }) => {
           body: JSON.stringify({ email: storedEmail }),
         });
         const data = await response.json();
-        console.log("Fetched Data: ", data);
         setName(data.name);
         setPhoto(data.photo);
         setPass(data.password);
@@ -80,7 +79,6 @@ const Profile = ({ changePage }) => {
   }, [storedEmail]);
 
   function saveSubmit() {
-    
     const updatedData = {
       email: email,
       name: name,
@@ -99,21 +97,18 @@ const Profile = ({ changePage }) => {
       },
       body: JSON.stringify(updatedData),
     })
-
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error("Error saving/updating Profile:", error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error saving/updating Profile:", error);
+      });
   }
   function deleteSubmit() {
-
     const deleteData = {
       email: storedEmail,
     };
-
   }
 
   return (

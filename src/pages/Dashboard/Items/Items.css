@@ -73,6 +73,7 @@
 .newItem select {
   border: 0.1px solid gray;
   color: gray;
+  border-radius: 0.3rem;
 }
 
 .newItem .plus {
