@@ -9,6 +9,7 @@ import { FaPlus } from "react-icons/fa";
 
 const Dashboard = ({ changePage }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchList, setSearchList] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userId = localStorage.getItem("userId");
   const [totalPriceAllLists, setTotalPriceAllLists] = useState(0);
@@ -46,7 +47,12 @@ const Dashboard = ({ changePage }) => {
               <option value="">All categories</option>
               <ListCategories />
             </select>
-            <input type="text" placeholder="Search" />
+            <input
+              type="text"
+              placeholder="Search by Name"
+              value={searchList}
+              onChange={(e) => setSearchList(e.target.value)}
+            />
           </div>
           <p className="totalLists">${totalPriceAllLists}</p>
         </div>
@@ -56,6 +62,7 @@ const Dashboard = ({ changePage }) => {
             <Lists
               userId={userId}
               selectedCategory={selectedCategory}
+              searchList={searchList}
               calculateTotalPriceAllLists={calculateTotalPriceAllLists}
             />
           </div>

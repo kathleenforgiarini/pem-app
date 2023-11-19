@@ -2,7 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./Lists.css";
 import List from "./List";
 
-const Lists = ({ userId, selectedCategory, calculateTotalPriceAllLists }) => {
+const Lists = ({
+  userId,
+  selectedCategory,
+  searchList,
+  calculateTotalPriceAllLists,
+}) => {
   const [updatedLists, setUpdatedLists] = useState([]);
   const [totalPriceList, setTotalPriceList] = useState(0);
 
@@ -16,6 +21,7 @@ const Lists = ({ userId, selectedCategory, calculateTotalPriceAllLists }) => {
         body: JSON.stringify({
           userId: userId,
           selectedCategory: selectedCategory,
+          name: searchList,
         }),
       });
       const listData = await response.json();
@@ -23,7 +29,7 @@ const Lists = ({ userId, selectedCategory, calculateTotalPriceAllLists }) => {
     } catch (error) {
       console.error("Error listing items", error);
     }
-  }, [selectedCategory, userId]);
+  }, [searchList, selectedCategory, userId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +42,7 @@ const Lists = ({ userId, selectedCategory, calculateTotalPriceAllLists }) => {
           body: JSON.stringify({
             userId: userId,
             selectedCategory: selectedCategory,
+            name: searchList,
           }),
         });
         const listData = await response.json();
@@ -48,7 +55,7 @@ const Lists = ({ userId, selectedCategory, calculateTotalPriceAllLists }) => {
     };
 
     fetchData();
-  }, [listLists, userId, selectedCategory]);
+  }, [listLists, userId, selectedCategory, searchList]);
 
   useEffect(() => {
     // Calcula o preço total de todas as listas
