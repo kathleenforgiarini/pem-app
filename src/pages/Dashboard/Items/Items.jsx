@@ -129,8 +129,6 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
 
   const newItem = async () => {
     try {
-      console.log(list_id);
-      console.log(itemCategory);
       const insertResponse = await fetch(
         "http://localhost/pem-api/createItem.php",
         {

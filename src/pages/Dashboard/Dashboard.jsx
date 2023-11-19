@@ -55,6 +55,7 @@ const Dashboard = ({ changePage }) => {
             <h1>My Lists</h1>
             <Lists
               userId={userId}
+              selectedCategory={selectedCategory}
               calculateTotalPriceAllLists={calculateTotalPriceAllLists}
             />
           </div>
