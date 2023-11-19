@@ -106,6 +106,7 @@
   padding: 1rem;
   border-right: 1px solid gray;
   border-left: 1px solid gray;
+  background-color: #ececec;
 }
 
 .maxPrice label {
