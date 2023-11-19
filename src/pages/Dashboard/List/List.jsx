@@ -170,12 +170,12 @@ const List = ({ list, listLists }) => {
               value={listState.description}
               onChange={(e) => handleListChange("description", e.target.value)}
             />
-            <div className="searchItems">
+            {/* <div className="searchItems">
               <input type="text" placeholder="Search" />
               <label className="searchIcon" htmlFor="searchInput">
                 <FaSearch />
               </label>
-            </div>
+            </div> */}
           </div>
           <Items
             list_id={listState.id}
