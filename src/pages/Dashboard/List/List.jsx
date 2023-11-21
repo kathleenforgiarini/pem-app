@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./Lists.css";
-import { FaAngleDown, FaPlus } from "react-icons/fa";
+import { FaAngleDown, FaPlus, FaTrash } from "react-icons/fa";
 import ListCategories from "../ListCategories/ListCategories";
 import Items from "../Items/Items";
 import ShareList from "./ShareList/ShareList";
@@ -12,14 +12,7 @@ const List = ({ list, listLists, sharedList }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [shareWithEmail, setShareWithEmail] = useState("");
   const [totalPriceColor, setTotalPriceColor] = useState("green");
-  const [listState, setListState] = useState({
-    id: list.id,
-    name: list.name,
-    description: list.description,
-    max_price: list.max_price,
-    user_id: list.user_id,
-    list_cat_id: list.list_cat_id,
-  });
+  const [listState, setListState] = useState(list);
 
   const handleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -156,6 +149,33 @@ const List = ({ list, listLists, sharedList }) => {
     }
   };
 
+  const handleClickDeleteList = async (listId) => {
+    const deleteList = window.confirm(
+      "Are you sure you want to delete the list?"
+    );
+    if (deleteList) {
+      try {
+        const responseDelete = await fetch(
+          "http://localhost/pem-api/deleteList.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ listId: listId }),
+          }
+        );
+
+        const data = await responseDelete.json();
+        if (data) {
+          listLists();
+        }
+      } catch (error) {
+        console.error("Error", error);
+      }
+    }
+  };
+
   return (
     <div className="list">
       <div className="listCategory">
@@ -168,6 +188,16 @@ const List = ({ list, listLists, sharedList }) => {
             >
               <ListCategories />
             </select>
+
+            {!sharedList && (
+              <div>
+                <FaTrash
+                  className="deleteList"
+                  title="Delete list"
+                  onClick={() => handleClickDeleteList(listState.id)}
+                />
+              </div>
+            )}
           </>
         ) : (
           <span>
@@ -189,7 +219,7 @@ const List = ({ list, listLists, sharedList }) => {
         ) : (
           <span onClick={handleExpand}>{listState.name}</span>
         )}
-        <FaAngleDown onClick={handleExpand} />
+        <FaAngleDown className="angleDown" onClick={handleExpand} />
       </div>
 
       {isExpanded && (

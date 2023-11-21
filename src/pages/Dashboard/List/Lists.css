@@ -16,9 +16,11 @@
 .listCategory {
   display: flex;
   justify-content: center;
+  align-items: center;
   font-size: 1rem;
   padding: 0.5rem 2rem;
   border: 1px solid gray;
+  position: relative;
 }
 
 .selectCategory {
@@ -189,6 +191,27 @@
 
 .plusShareWithEmail:hover {
   color: green;
+  transform: scale(1.5);
+}
+
+.angleDown {
+  transition: transform 0.3s ease-in-out;
+}
+
+.angleDown:hover {
+  transform: scale(1.8);
+}
+
+.deleteList {
+  color: rgb(160, 6, 6);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+}
+
+.deleteList:hover {
   transform: scale(1.5);
 }
 
