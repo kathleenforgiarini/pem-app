@@ -100,25 +100,95 @@
   color: #aaa;
 }
 
-.maxPrice {
+.listFunctions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 1rem;
   border-right: 1px solid gray;
   border-left: 1px solid gray;
   background-color: #ececec;
 }
 
-.maxPrice label {
+.maxPrice {
+  width: 30%;
+  margin-right: 1rem;
+}
+
+.maxPrice,
+.shareList {
+  display: flex;
+  flex-direction: column;
+}
+
+.maxPrice label,
+.shareList label {
   font-size: 0.7rem;
 }
 
-.maxPrice input {
+.maxPrice input,
+.shareList input {
   margin-top: 0.2rem;
   padding-left: 0.5rem;
   border: 1px solid gray;
   border-radius: 0.3rem;
   width: 5rem;
+}
+
+.shareList {
+  margin-right: 2rem;
+}
+
+.shareList input {
+  width: 9rem;
+}
+
+.shareFunction {
+  padding-left: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-right: 1px solid gray;
+  border-left: 1px solid gray;
+  background-color: #ececec;
+}
+
+.sharedWith {
+  align-self: flex-end;
+}
+
+.sharedWith img {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
+.sharedWith {
+  margin-bottom: 1rem;
+}
+
+.inputShare {
+  position: relative;
+}
+
+.plusShareWithEmail {
+  font-size: 0.7rem;
+  position: absolute;
+  top: 0.4rem;
+  right: 1rem;
+  color: gray;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.plusShareWithEmail:hover {
+  color: green;
+  transform: scale(1.5);
 }
 
 @media screen and (max-width: 400px) {

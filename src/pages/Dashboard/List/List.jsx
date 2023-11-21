@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./Lists.css";
-import { FaAngleDown, FaSearch } from "react-icons/fa";
+import { FaAngleDown, FaPlus } from "react-icons/fa";
 import ListCategories from "../ListCategories/ListCategories";
 import Items from "../Items/Items";
+import ShareList from "./ShareList/ShareList";
 
 const List = ({ list, listLists }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [shareWithEmail, setShareWithEmail] = useState("");
   const [totalPriceColor, setTotalPriceColor] = useState("green");
   const [listState, setListState] = useState({
     id: list.id,
@@ -131,6 +133,28 @@ const List = ({ list, listLists }) => {
     }
   };
 
+  const handleClickShareWithEmail = async () => {
+    try {
+      const responseShared = await fetch(
+        "http://localhost/pem-api/createShareWith.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ listId: listState.id, email: shareWithEmail }),
+        }
+      );
+
+      const data = await responseShared.json();
+      if (data) {
+        setShareWithEmail("");
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
   return (
     <div className="list">
       <div className="listCategory">
@@ -201,7 +225,23 @@ const List = ({ list, listLists }) => {
                 onChange={(e) => handleListChange("max_price", e.target.value)}
               />
             </div>
+            <div className="shareList">
+              <label>Share list</label>
+              <div className="inputShare">
+                <input
+                  type="text"
+                  placeholder="E-mail"
+                  value={shareWithEmail}
+                  onChange={(e) => setShareWithEmail(e.target.value)}
+                />
+                <FaPlus
+                  className="plusShareWithEmail"
+                  onClick={() => handleClickShareWithEmail()}
+                ></FaPlus>
+              </div>
+            </div>
           </div>
+          <ShareList listId={listState.id} />
         </>
       )}
       <div className="listPrice" style={{ color: totalPriceColor }}>

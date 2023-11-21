@@ -41,6 +41,11 @@
 .times {
   color: rgb(160, 6, 6);
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.times:hover {
+  transform: scale(1.5);
 }
 
 .itemName {
@@ -84,6 +89,11 @@
 .newItem .check {
   color: rgb(77, 146, 77);
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.newItem .check:hover {
+  transform: scale(1.5);
 }
 
 .labels {
