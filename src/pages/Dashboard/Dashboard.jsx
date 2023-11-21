@@ -68,7 +68,16 @@ const Dashboard = ({ changePage }) => {
           </div>
 
           <div className="sharedLists">
-            <h1>Shared with me</h1>
+            <div className="myLists">
+              <h1>Shared with me</h1>
+              <Lists
+                sharedList={true}
+                userId={userId}
+                selectedCategory={selectedCategory}
+                searchList={searchList}
+                calculateTotalPriceAllLists={calculateTotalPriceAllLists}
+              />
+            </div>
           </div>
         </div>
       </section>

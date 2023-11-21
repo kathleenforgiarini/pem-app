@@ -5,7 +5,7 @@ import ListCategories from "../ListCategories/ListCategories";
 import Items from "../Items/Items";
 import ShareList from "./ShareList/ShareList";
 
-const List = ({ list, listLists }) => {
+const List = ({ list, listLists, sharedList }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
@@ -148,6 +148,7 @@ const List = ({ list, listLists }) => {
 
       const data = await responseShared.json();
       if (data) {
+        listLists();
         setShareWithEmail("");
       }
     } catch (error) {
@@ -216,32 +217,38 @@ const List = ({ list, listLists }) => {
               handleChildPrice={handleChildPrice}
             />
           </div>
-          <div className="listFunctions">
-            <div className="maxPrice">
-              <label>Maximum price $</label>
-              <input
-                type="number"
-                value={listState.max_price}
-                onChange={(e) => handleListChange("max_price", e.target.value)}
-              />
-            </div>
-            <div className="shareList">
-              <label>Share list</label>
-              <div className="inputShare">
-                <input
-                  type="text"
-                  placeholder="E-mail"
-                  value={shareWithEmail}
-                  onChange={(e) => setShareWithEmail(e.target.value)}
-                />
-                <FaPlus
-                  className="plusShareWithEmail"
-                  onClick={() => handleClickShareWithEmail()}
-                ></FaPlus>
+          {!sharedList && (
+            <>
+              <div className="listFunctions">
+                <div className="maxPrice">
+                  <label>Maximum price $</label>
+                  <input
+                    type="number"
+                    value={listState.max_price}
+                    onChange={(e) =>
+                      handleListChange("max_price", e.target.value)
+                    }
+                  />
+                </div>
+                <div className="shareList">
+                  <label>Share list</label>
+                  <div className="inputShare">
+                    <input
+                      type="text"
+                      placeholder="E-mail"
+                      value={shareWithEmail}
+                      onChange={(e) => setShareWithEmail(e.target.value)}
+                    />
+                    <FaPlus
+                      className="plusShareWithEmail"
+                      onClick={() => handleClickShareWithEmail()}
+                    ></FaPlus>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <ShareList listId={listState.id} />
+              <ShareList listId={listState.id} />
+            </>
+          )}
         </>
       )}
       <div className="listPrice" style={{ color: totalPriceColor }}>
