@@ -82,7 +82,11 @@ const Dashboard = ({ changePage }) => {
         </div>
       </section>
 
-      <Modal isModalOpen={isModalOpen} handleModalClose={handleModalClose} />
+      <Modal
+        isModalOpen={isModalOpen}
+        handleModalClose={handleModalClose}
+        userId={userId}
+      />
 
       <Footer />
     </div>
