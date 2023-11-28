@@ -119,7 +119,7 @@ const Profile = ({ changePage }) => {
         <div className="formProfile">
           <div className="photoProfile">
             {photo && !photo.startsWith("data:image") ? (
-              <img src={`data:image/png;base64,${photo}`} alt="userPhoto" />
+              <img src={`data:image/png,base64,${photo}`} alt="userPhoto" />
             ) : (
               <img src={photo ? photo : userPhoto} alt="userPhoto" />
             )}
