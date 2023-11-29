@@ -9,8 +9,8 @@ const Item = ({
   deleteItem,
   list_category,
 }) => (
-  <div className={item.done === "0" ? "item" : "completedItem"}>
-    {item.done === "0" ? (
+  <div className={item.done === 0 ? "item" : "completedItem"}>
+    {item.done === 0 ? (
       <FaRegSquare
         className="square"
         onClick={() => handleToggleDone(item.id, item.done)}

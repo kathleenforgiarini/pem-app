@@ -68,12 +68,12 @@ const List = ({ list, listLists, sharedList }) => {
 
   const fetchItems = useCallback(async () => {
     try {
-      const response = await fetch("http://localhost/pem-api/item.php", {
+      const response = await fetch("http://localhost/pem-api/manageItems.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ list_id: listState.id }),
+        body: JSON.stringify({ operation: "select", list_id: listState.id }),
       });
       const data = await response.json();
       setItems(data);
