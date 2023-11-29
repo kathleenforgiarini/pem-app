@@ -54,101 +54,81 @@ const Login = ({ changePage }) => {
     setShowPassword(!showPassword);
   };
 
-  function loginSubmit() {
-    if (isLogin) {
-      if (email !== "" && pass !== "") {
-        var url = "http://localhost/pem-api/login.php";
-        var headers = {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        };
-        var Data = {
-          email: email,
-          pass: pass,
-        };
-
-        fetch(url, {
+  const signUpSubmit = async () => {
+    try {
+      const signUpResponse = await fetch(
+        "http://localhost/pem-api/manageUser.php",
+        {
           method: "POST",
-          headers: headers,
-          body: JSON.stringify(Data),
-        })
-          .then((response) => response.json())
-          .then((response) => {
-            if (
-              response.result === "Invalid email!" ||
-              response.result === "Invalid password!"
-            ) {
-              setError(response.result);
-            } else {
-              localStorage.setItem("userName", response.name);
-              localStorage.setItem("userPhoto", response.photo);
-              localStorage.setItem("userEmail", response.email);
-              setMsgButtonLogin("Success");
-              setShowConfetti(true);
-              setTimeout(function () {
-                localStorage.setItem("login", true);
-                localStorage.setItem("userId", response.id);
-                changePage("dashboard");
-              }, 3000);
-            }
-          })
-          .catch((err) => {
-            console.error("Error in fetching data:", err);
-            setError(err.toString());
-          });
-      } else {
-        setError("All fields are required!");
-      }
-    } else {
-      // Signup mode logic
-      if (name !== "" && email !== "" && pass !== "") {
-        var url = "http://localhost/pem-api/signup.php"; // Change to the signup endpoint
-        var headers = {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        };
-        var Data = {
-          name: name,
-          email: email,
-          pass: pass,
-        };
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            operation: "create",
+            name: name,
+            email: email,
+            pass: pass,
+          }),
+        }
+      );
 
-        fetch(url, {
-          method: "POST",
-          headers: headers,
-          body: JSON.stringify(Data),
-        })
-          .then((response) => response.json())
-          .then((response) => {
-            if (response.result === "User already exists!") {
-              setError(response.result);
-            } else {
-              // Handle successful signup
-              localStorage.setItem("userName", response.name);
-              localStorage.setItem("userPhoto", response.photo);
-              localStorage.setItem("userEmail", response.email);
-              
-              setTimeout(function () {
-                localStorage.setItem("login", true);
-                //switch to login mode
-                setIsLogin(true);
-                //wait the user press the login button
-                setMsgButtonLogin("Log in");
-                setShowConfetti(false);
-                changePage("login");
-                
-              }, 3000);
-            }
-          })
-          .catch((err) => {
-            console.error("Error in fetching data:", err);
-            setError(err.toString());
-          });
+      const data = await signUpResponse.json();
+      if (data === "user_registered") {
+        alert("User already registered, try another email!");
+      } else if (data === "fields_required") {
+        alert("Please fill in all fields!");
+      } else if (data === "fail") {
+        alert("An error occurred, try again!");
+      } else if (data === "success") {
+        setIsLogin(true);
+        alert("Thank you for registering, log in to your profile");
+        changePage("login");
       } else {
-        setError("All fields are required!");
+        alert("Error! Try again...");
       }
+    } catch (error) {
+      console.error("Error creating user", error);
     }
-  }
+  };
+
+  const loginSubmit = async () => {
+    try {
+      const loginResponse = await fetch(
+        "http://localhost/pem-api/manageUser.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            operation: "login",
+            email: email,
+            pass: pass,
+          }),
+        }
+      );
+
+      const data = await loginResponse.json();
+      if (data === "invalid_credencials") {
+        alert("Invalid credencials, try again!");
+      } else if (data === "fields_required") {
+        alert("All fields are required!");
+      } else {
+        localStorage.setItem("userName", data.name);
+        localStorage.setItem("userPhoto", data.photo);
+        localStorage.setItem("userEmail", data.email);
+        setMsgButtonLogin("Success");
+        setShowConfetti(true);
+        setTimeout(function () {
+          localStorage.setItem("login", true);
+          localStorage.setItem("userId", data.id);
+          changePage("dashboard");
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error creating item", error);
+    }
+  };
 
   const [isLogin, setIsLogin] = useState(true);
   const loginRef = useRef(null);
@@ -248,7 +228,6 @@ const Login = ({ changePage }) => {
               type="submit"
               onClick={() => {
                 loginSubmit();
-                setShowConfetti(true);
               }}
             >
               {msgButtonLogin === "Success" ? (
@@ -263,7 +242,13 @@ const Login = ({ changePage }) => {
             </button>
           )}
           {!isLogin && (
-            <button className="btnSubmit" type="submit" onClick={loginSubmit}>
+            <button
+              className="btnSubmit"
+              type="submit"
+              onClick={() => {
+                signUpSubmit();
+              }}
+            >
               Sign Up
             </button>
           )}
