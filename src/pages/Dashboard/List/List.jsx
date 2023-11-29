@@ -141,8 +141,11 @@ const List = ({ list, listLists, sharedList }) => {
 
       const data = await responseShared.json();
       if (data) {
+        alert(data);
         listLists();
         setShareWithEmail("");
+      } else {
+        alert("Please enter a valid email");
       }
     } catch (error) {
       console.error("Error", error);

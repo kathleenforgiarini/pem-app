@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import userPhoto from "../../../../assets/userPhoto.png";
 
 const ShareList = (listId) => {
   const [sharedWith, setSharedWith] = useState([]);
@@ -58,18 +59,39 @@ const ShareList = (listId) => {
   return (
     <div className="shareFunction">
       <div className="sharedWith">
-        {sharedWith.map((itemShare, indexShare) => (
-          <img
-            key={indexShare}
-            id={itemShare.id}
-            src={`data:image/png;base64,${itemShare.photo}`}
-            title={itemShare.name}
-            alt={itemShare.name}
-            onClick={() =>
-              handleClickShareWith(itemShare.id, listId.listId, itemShare.name)
-            }
-          />
-        ))}
+        {sharedWith.map((itemShare, indexShare) =>
+          itemShare.photo ? (
+            <img
+              key={indexShare}
+              id={itemShare.id}
+              src={`data:image/png;base64,${itemShare.photo}`}
+              title={itemShare.name}
+              alt={itemShare.name}
+              onClick={() =>
+                handleClickShareWith(
+                  itemShare.id,
+                  listId.listId,
+                  itemShare.name
+                )
+              }
+            />
+          ) : (
+            <img
+              key={indexShare}
+              id={itemShare.id}
+              src={userPhoto}
+              title={itemShare.name}
+              alt={itemShare.name}
+              onClick={() =>
+                handleClickShareWith(
+                  itemShare.id,
+                  listId.listId,
+                  itemShare.name
+                )
+              }
+            />
+          )
+        )}
       </div>
     </div>
   );
