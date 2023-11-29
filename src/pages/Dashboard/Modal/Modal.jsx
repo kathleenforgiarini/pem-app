@@ -20,12 +20,13 @@ const Modal = ({ isModalOpen, handleModalClose, userId }) => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch("http://localhost/pem-api/createList.php", {
+      const response = await fetch("http://localhost/pem-api/manageLists.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          operation: "create",
           name: formData.name,
           description: formData.description,
           list_cat_id: formData.list_cat_id,
@@ -36,6 +37,7 @@ const Modal = ({ isModalOpen, handleModalClose, userId }) => {
 
       const data = await response.json();
       if (data) {
+        alert(data);
         window.location.reload();
         handleModalClose(false);
       } else {

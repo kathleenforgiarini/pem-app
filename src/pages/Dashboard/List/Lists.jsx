@@ -32,28 +32,32 @@ const Lists = ({
         const listData = await response.json();
         setUpdatedLists(listData);
       } catch (error) {
-        console.error("Error listing items", error);
+        console.error("Error listing lists", error);
       }
     } else {
       try {
-        const response = await fetch("http://localhost/pem-api/list.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: userId,
-            selectedCategory: selectedCategory,
-            name: searchList,
-          }),
-        });
+        const response = await fetch(
+          "http://localhost/pem-api/manageLists.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              operation: "select",
+              userId: userId,
+              selectedCategory: selectedCategory,
+              name: searchList,
+            }),
+          }
+        );
         const listData = await response.json();
         setUpdatedLists(listData);
       } catch (error) {
-        console.error("Error listing items", error);
+        console.error("Error listing lists", error);
       }
     }
-  }, [searchList, selectedCategory, sharedList, userId]);
+  }, [searchList, selectedCategory]);
 
   useEffect(() => {
     listLists();

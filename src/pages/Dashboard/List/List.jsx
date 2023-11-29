@@ -50,7 +50,7 @@ const List = ({ list, listLists, sharedList }) => {
   const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch(
-        "http://localhost/pem-api/listCategories.php",
+        "http://localhost/pem-api/manageListCategories.php",
         {
           method: "POST",
           headers: {
@@ -100,13 +100,14 @@ const List = ({ list, listLists, sharedList }) => {
         }
       }
       const updateResponse = await fetch(
-        "http://localhost/pem-api/updateList.php",
+        "http://localhost/pem-api/manageLists.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            operation: "update",
             listId: listState.id,
             field,
             value,
@@ -159,18 +160,19 @@ const List = ({ list, listLists, sharedList }) => {
     if (deleteList) {
       try {
         const responseDelete = await fetch(
-          "http://localhost/pem-api/deleteList.php",
+          "http://localhost/pem-api/manageLists.php",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ listId: listId }),
+            body: JSON.stringify({ operation: "delete", listId: listId }),
           }
         );
 
         const data = await responseDelete.json();
         if (data) {
+          alert(data);
           listLists();
         }
       } catch (error) {
@@ -204,7 +206,7 @@ const List = ({ list, listLists, sharedList }) => {
           </>
         ) : (
           <span>
-            {categories.find((cat) => cat.id === listState.list_cat_id)?.name}
+            {categories.find((cat) => cat.id == listState.list_cat_id)?.name}
           </span>
         )}
       </div>

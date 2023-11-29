@@ -7,7 +7,7 @@ const ItemCategories = (list) => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "http://localhost/pem-api/itemCategories.php",
+          "http://localhost/pem-api/manageItemCategories.php",
           {
             method: "POST",
             headers: {
