@@ -130,13 +130,17 @@ const List = ({ list, listLists, sharedList }) => {
   const handleClickShareWithEmail = async () => {
     try {
       const responseShared = await fetch(
-        "http://localhost/pem-api/createShareWith.php",
+        "http://localhost/pem-api/manageShareLists.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ listId: listState.id, email: shareWithEmail }),
+          body: JSON.stringify({
+            operation: "create",
+            listId: listState.id,
+            email: shareWithEmail,
+          }),
         }
       );
 

@@ -16,21 +16,35 @@ const Lists = ({
     if (sharedList) {
       try {
         const response = await fetch(
-          "http://localhost/pem-api/listShared.php",
+          "http://localhost/pem-api/manageShareLists.php",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
+              operation: "listsShared",
               userId: userId,
               selectedCategory: selectedCategory,
               name: searchList,
             }),
           }
         );
-        const listData = await response.json();
-        setUpdatedLists(listData);
+        const responseData = await response.json();
+        // console.log(responseData);
+        if (Array.isArray(responseData)) {
+          // Se a resposta for um array, assume-se que é um array de arrays
+          const listData = responseData.map((item) =>
+            Array.isArray(item) ? item[0] : item
+          );
+          setUpdatedLists(listData);
+        } else {
+          // Se não for um array, assume-se que é um único objeto ou array de objetos
+          const listData = Array.isArray(responseData)
+            ? responseData
+            : [responseData];
+          setUpdatedLists(listData);
+        }
       } catch (error) {
         console.error("Error listing lists", error);
       }

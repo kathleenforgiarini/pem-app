@@ -7,13 +7,13 @@ const ShareList = (listId) => {
   const sharedWithList = async () => {
     try {
       const responseShared = await fetch(
-        "http://localhost/pem-api/shareList.php",
+        "http://localhost/pem-api/manageShareLists.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ list: listId.listId }),
+          body: JSON.stringify({ operation: "select", list: listId.listId }),
         }
       );
 
@@ -36,19 +36,25 @@ const ShareList = (listId) => {
     if (deleteUser) {
       try {
         const responseShared = await fetch(
-          "http://localhost/pem-api/deleteShareWith.php",
+          "http://localhost/pem-api/manageShareLists.php",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ userId: userId, listId: listId }),
+            body: JSON.stringify({
+              operation: "delete",
+              userId: userId,
+              listId: listId,
+            }),
           }
         );
 
         const data = await responseShared.json();
-        if (data) {
+        if (data === "success") {
           sharedWithList();
+        } else {
+          alert("An error occurred, try again!");
         }
       } catch (error) {
         console.error("Error", error);
