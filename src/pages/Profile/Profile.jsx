@@ -50,7 +50,7 @@ const Profile = ({ changePage }) => {
 
   const handleFileReader = (e) => {
     const fileData = e.target.result;
-    setPhoto(fileData);
+    setPhoto(fileData.split(",")[1]);
   };
 
   const handleShowPassword = () => {
@@ -102,7 +102,14 @@ const Profile = ({ changePage }) => {
       );
 
       const data = await saveResponse.json();
-      console.log(data);
+      if (data !== "fail") {
+        localStorage.setItem("userPhoto", data.photo);
+        localStorage.setItem("userName", data.name);
+        localStorage.setItem("userEmail", data.email);
+        window.location.reload();
+      } else {
+        alert("An error occurred, try again!");
+      }
     } catch (error) {
       console.error("Error creating item", error);
     }
