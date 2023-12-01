@@ -7,13 +7,13 @@ const ListCategories = () => {
     (async () => {
       try {
         const response = await fetch(
-          "http://localhost/pem-api/listCategories.php",
+          "http://localhost/pem-api/manageListCategories.php",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ list_cat_id: 0 }),
+            body: JSON.stringify({ list_cat_id: "" }),
           }
         );
         const data = await response.json();

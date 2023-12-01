@@ -50,7 +50,7 @@ const Profile = ({ changePage }) => {
 
   const handleFileReader = (e) => {
     const fileData = e.target.result;
-    setPhoto(fileData);
+    setPhoto(fileData.split(",")[1]);
   };
 
   const handleShowPassword = () => {
@@ -60,13 +60,16 @@ const Profile = ({ changePage }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost/pem-api/profile.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email: storedEmail }),
-        });
+        const response = await fetch(
+          "http://localhost/pem-api/manageUser.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ operation: "select", email: storedEmail }),
+          }
+        );
         const data = await response.json();
         setName(data.name);
         setPhoto(data.photo);
@@ -78,38 +81,73 @@ const Profile = ({ changePage }) => {
     fetchData();
   }, [storedEmail]);
 
-  function saveSubmit() {
-    const updatedData = {
-      email: email,
-      name: name,
-      photo: photo,
-      password: pass,
-    };
-    console.log(updatedData);
+  const saveSubmit = async () => {
+    try {
+      const saveResponse = await fetch(
+        "http://localhost/pem-api/manageUser.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            operation: "update",
+            id: localStorage.getItem("userId"),
+            name: name,
+            email: email,
+            pass: pass,
+            photo: photo,
+          }),
+        }
+      );
 
-    // const isNewUser = !storedEmail;
-    // const endPoint = isNewUser ? "http://localhost/pem-api/register.php" : "http://localhost/pem-api/update.php";
+      const data = await saveResponse.json();
+      if (data !== "fail") {
+        localStorage.setItem("userPhoto", data.photo);
+        localStorage.setItem("userName", data.name);
+        localStorage.setItem("userEmail", data.email);
+        window.location.reload();
+      } else {
+        alert("An error occurred, try again!");
+      }
+    } catch (error) {
+      console.error("Error creating item", error);
+    }
+  };
 
-    fetch("http://localhost/pem-api/profile.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error saving/updating Profile:", error);
-      });
-  }
-  function deleteSubmit() {
-    const deleteData = {
-      email: storedEmail,
-    };
-  }
+  const deleteSubmit = async () => {
+    try {
+      const deleteUser = window.confirm(
+        "Are you sure you want to delete your account?"
+      );
+      if (deleteUser) {
+        const saveResponse = await fetch(
+          "http://localhost/pem-api/manageUser.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              operation: "delete",
+              id: localStorage.getItem("userId"),
+            }),
+          }
+        );
+
+        const data = await saveResponse.json();
+        if (data === "success") {
+          localStorage.setItem("login", "");
+          changePage("login");
+          alert("Account deleted!");
+        } else {
+          alert("An error occurred, try again!");
+        }
+      }
+    } catch (error) {
+      console.error("Error creating item", error);
+    }
+  };
 
   return (
     <div>

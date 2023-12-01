@@ -13,13 +13,16 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
 
   const listItems = useCallback(async () => {
     try {
-      const itemsResponse = await fetch("http://localhost/pem-api/item.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ list_id: list_id }),
-      });
+      const itemsResponse = await fetch(
+        "http://localhost/pem-api/manageItems.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ operation: "select", list_id: list_id }),
+        }
+      );
       const itemsCountData = await itemsResponse.json();
       setUpdatedItems(itemsCountData);
       const select = document.getElementsByName("newItemCategory");
@@ -32,13 +35,16 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost/pem-api/item.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ list_id: list_id }),
-        });
+        const response = await fetch(
+          "http://localhost/pem-api/manageItems.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ operation: "select", list_id: list_id }),
+          }
+        );
 
         const data = await response.json();
         setUpdatedItems(data);
@@ -68,13 +74,14 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
   const handleItemChange = async (itemId, field, value) => {
     try {
       const updateResponse = await fetch(
-        "http://localhost/pem-api/updateItem.php",
+        "http://localhost/pem-api/manageItems.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            operation: "update",
             itemId,
             field,
             value,
@@ -93,7 +100,7 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
   };
 
   const handleToggleDone = async (itemId, value) => {
-    const newDone = value === "1" ? "0" : "1";
+    const newDone = value === 1 ? 0 : 1;
 
     try {
       await handleItemChange(itemId, "done", newDone);
@@ -105,13 +112,14 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
   const deleteItem = async (itemId) => {
     try {
       const updateResponse = await fetch(
-        "http://localhost/pem-api/deleteItem.php",
+        "http://localhost/pem-api/manageItems.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            operation: "delete",
             itemId,
           }),
         }
@@ -130,13 +138,14 @@ const Items = ({ list_id, list_category, handleChildPrice }) => {
   const newItem = async () => {
     try {
       const insertResponse = await fetch(
-        "http://localhost/pem-api/createItem.php",
+        "http://localhost/pem-api/manageItems.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            operation: "create",
             name: itemName,
             quantity: itemQuantity,
             price: itemPrice,

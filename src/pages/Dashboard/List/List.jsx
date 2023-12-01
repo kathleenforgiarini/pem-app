@@ -50,7 +50,7 @@ const List = ({ list, listLists, sharedList }) => {
   const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch(
-        "http://localhost/pem-api/listCategories.php",
+        "http://localhost/pem-api/manageListCategories.php",
         {
           method: "POST",
           headers: {
@@ -68,12 +68,12 @@ const List = ({ list, listLists, sharedList }) => {
 
   const fetchItems = useCallback(async () => {
     try {
-      const response = await fetch("http://localhost/pem-api/item.php", {
+      const response = await fetch("http://localhost/pem-api/manageItems.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ list_id: listState.id }),
+        body: JSON.stringify({ operation: "select", list_id: listState.id }),
       });
       const data = await response.json();
       setItems(data);
@@ -100,13 +100,14 @@ const List = ({ list, listLists, sharedList }) => {
         }
       }
       const updateResponse = await fetch(
-        "http://localhost/pem-api/updateList.php",
+        "http://localhost/pem-api/manageLists.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            operation: "update",
             listId: listState.id,
             field,
             value,
@@ -129,20 +130,27 @@ const List = ({ list, listLists, sharedList }) => {
   const handleClickShareWithEmail = async () => {
     try {
       const responseShared = await fetch(
-        "http://localhost/pem-api/createShareWith.php",
+        "http://localhost/pem-api/manageShareLists.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ listId: listState.id, email: shareWithEmail }),
+          body: JSON.stringify({
+            operation: "create",
+            listId: listState.id,
+            email: shareWithEmail,
+          }),
         }
       );
 
       const data = await responseShared.json();
       if (data) {
+        alert(data);
         listLists();
         setShareWithEmail("");
+      } else {
+        alert("Please enter a valid email");
       }
     } catch (error) {
       console.error("Error", error);
@@ -156,18 +164,19 @@ const List = ({ list, listLists, sharedList }) => {
     if (deleteList) {
       try {
         const responseDelete = await fetch(
-          "http://localhost/pem-api/deleteList.php",
+          "http://localhost/pem-api/manageLists.php",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ listId: listId }),
+            body: JSON.stringify({ operation: "delete", listId: listId }),
           }
         );
 
         const data = await responseDelete.json();
         if (data) {
+          alert(data);
           listLists();
         }
       } catch (error) {
@@ -201,7 +210,7 @@ const List = ({ list, listLists, sharedList }) => {
           </>
         ) : (
           <span>
-            {categories.find((cat) => cat.id === listState.list_cat_id)?.name}
+            {categories.find((cat) => cat.id == listState.list_cat_id)?.name}
           </span>
         )}
       </div>

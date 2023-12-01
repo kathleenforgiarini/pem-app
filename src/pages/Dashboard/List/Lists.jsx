@@ -16,13 +16,49 @@ const Lists = ({
     if (sharedList) {
       try {
         const response = await fetch(
-          "http://localhost/pem-api/listShared.php",
+          "http://localhost/pem-api/manageShareLists.php",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
+              operation: "listsShared",
+              userId: userId,
+              selectedCategory: selectedCategory,
+              name: searchList,
+            }),
+          }
+        );
+        const responseData = await response.json();
+        // console.log(responseData);
+        if (Array.isArray(responseData)) {
+          // Se a resposta for um array, assume-se que é um array de arrays
+          const listData = responseData.map((item) =>
+            Array.isArray(item) ? item[0] : item
+          );
+          setUpdatedLists(listData);
+        } else {
+          // Se não for um array, assume-se que é um único objeto ou array de objetos
+          const listData = Array.isArray(responseData)
+            ? responseData
+            : [responseData];
+          setUpdatedLists(listData);
+        }
+      } catch (error) {
+        console.error("Error listing lists", error);
+      }
+    } else {
+      try {
+        const response = await fetch(
+          "http://localhost/pem-api/manageLists.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              operation: "select",
               userId: userId,
               selectedCategory: selectedCategory,
               name: searchList,
@@ -32,28 +68,10 @@ const Lists = ({
         const listData = await response.json();
         setUpdatedLists(listData);
       } catch (error) {
-        console.error("Error listing items", error);
-      }
-    } else {
-      try {
-        const response = await fetch("http://localhost/pem-api/list.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: userId,
-            selectedCategory: selectedCategory,
-            name: searchList,
-          }),
-        });
-        const listData = await response.json();
-        setUpdatedLists(listData);
-      } catch (error) {
-        console.error("Error listing items", error);
+        console.error("Error listing lists", error);
       }
     }
-  }, [searchList, selectedCategory, sharedList, userId]);
+  }, [searchList, selectedCategory]);
 
   useEffect(() => {
     listLists();
