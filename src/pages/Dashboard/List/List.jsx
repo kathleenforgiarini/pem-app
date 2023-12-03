@@ -40,7 +40,7 @@ const List = ({ list, listLists, sharedList }) => {
   useEffect(() => {
     if (items.length > 0) {
       const total = items.reduce((accumulator, item) => {
-        return accumulator + parseFloat(item.price);
+        return accumulator + parseFloat(item.price * item.quantity);
       }, 0);
       handleChildPrice(total);
       listLists();
