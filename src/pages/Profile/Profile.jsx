@@ -156,11 +156,10 @@ const Profile = ({ changePage }) => {
         <h1>My Profile</h1>
         <div className="formProfile">
           <div className="photoProfile">
-            {photo && !photo.startsWith("data:image") ? (
-              <img src={`data:image/png,base64,${photo}`} alt="userPhoto" />
-            ) : (
-              <img src={photo ? photo : userPhoto} alt="userPhoto" />
-            )}
+            <img
+              src={photo ? `data:image/png;base64,${photo}` : userPhoto}
+              alt="imgUser"
+            />
             <input
               type="file"
               name="photo"

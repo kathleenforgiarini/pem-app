@@ -33,13 +33,11 @@ const Lists = ({
         const responseData = await response.json();
         // console.log(responseData);
         if (Array.isArray(responseData)) {
-          // Se a resposta for um array, assume-se que é um array de arrays
           const listData = responseData.map((item) =>
             Array.isArray(item) ? item[0] : item
           );
           setUpdatedLists(listData);
         } else {
-          // Se não for um array, assume-se que é um único objeto ou array de objetos
           const listData = Array.isArray(responseData)
             ? responseData
             : [responseData];
