@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./Profile.css";
 import userPhoto from "../../assets/userPhoto.png";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+// import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Footer from "../Footer/Footer";
 
 const Profile = ({ changePage }) => {
@@ -204,9 +204,9 @@ const Profile = ({ changePage }) => {
                 required
               />
             </div>
-            <span className="password-toggle" onClick={handleShowPassword}>
+            {/* <span className="password-toggle" onClick={handleShowPassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
+            </span> */}
           </div>
 
           <div className="buttonsProfile">
