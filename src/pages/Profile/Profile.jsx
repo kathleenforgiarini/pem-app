@@ -10,7 +10,7 @@ const Profile = ({ changePage }) => {
   const [photo, setPhoto] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
   const storedEmail = localStorage.getItem("userEmail");
 
   useEffect(() => {
@@ -53,9 +53,9 @@ const Profile = ({ changePage }) => {
     setPhoto(fileData.split(",")[1]);
   };
 
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  // const handleShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -195,7 +195,8 @@ const Profile = ({ changePage }) => {
             <label htmlFor="password">Password</label>
             <div className="password-input-container">
               <input
-                type={showPassword ? "text" : "password"}
+                // type={showPassword ? "text" : "password"}
+                type="password"
                 name="password"
                 id="password"
                 value={pass}
