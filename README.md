@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+
+![pem](https://github.com/kathleenforgiarini/pem-app/assets/82175930/07be0b35-34e2-4bfb-9009-435da371962f)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
